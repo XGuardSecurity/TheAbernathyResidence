@@ -211,7 +211,7 @@ details p{padding-bottom:22px;color:var(--muted)}
 .q-fields textarea{min-height:120px;resize:vertical}
 .q-nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:24px;flex-wrap:wrap}
 .q-right{display:flex;gap:10px;margin-left:auto}
-.q-right [hidden]{display:none}
+.q-right [hidden],.q-nav .btn[hidden]{display:none}
 .q-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .q-error{color:#9A3B2E;font-size:15px!important;margin:10px 0 0!important;min-height:1em}
 .q-note{font-size:13px!important;color:var(--muted);margin:16px 0 0!important}
@@ -271,9 +271,9 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   <section class="hero band" aria-labelledby="hero-title">
     <div class="wrap">
       <div>
-        <div class="eyebrow">Personal care home &middot; Douglasville, Georgia</div>
+        <div class="eyebrow">Personal care home &middot; Private pay &middot; Douglasville, Georgia</div>
         <h1 id="hero-title">A beautiful home, with <em>care day and night</em></h1>
-        <p>Room, board and personal care for seniors and adults with disabilities, in a new family home with only three residents.</p>
+        <p>Room, board and personal care for seniors and adults with disabilities, in a new family home with only three residents. <strong>Private pay only.</strong></p>
         <div class="actions">
           <a class="btn btn-dark" href="#tour">Book a private tour</a>
           <a class="btn btn-line" href="#packages">View the packages</a>
@@ -308,8 +308,8 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
         </article>
         <article>
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 19c-4-3-7-5.5-7-9a3.5 3.5 0 0 1 7-1 3.5 3.5 0 0 1 7 1c0 3.5-3 6-7 9z" fill="none" stroke="var(--mocha)" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
-          <h3>Nursing visits, arranged for you</h3>
-          <p>An independent licensed nursing partner, with an RN and an LPN, can visit residents in the home. We help set up every visit.</p>
+          <h3>Licensed nurses, provided for you</h3>
+          <p>We provide licensed nurses for our residents: an RN and an LPN from our licensed nursing partner, who care for residents right in the home.</p>
         </article>
       </div>
     </div>
@@ -366,7 +366,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div class="section-head">
         <div class="eyebrow">Three packages</div>
         <h2 id="packages-title">Room and board in every package, with more support at each level</h2>
-        <p>The Abernathy Residence is private-pay. Each plan is tailored to the person after a free care assessment. Request a private consultation to discuss accommodations.</p>
+        <p>We accept private pay only. Each plan is tailored to the person after a free care assessment. Request a private consultation to discuss accommodations.</p>
       </div>
       <div class="packs">
         <article class="pack">
@@ -479,8 +479,8 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       </div>
       <div class="faq-list">
         <details><summary>Who can live at The Abernathy Residence?</summary><p>Adults 18 and older, including seniors and adults with disabilities, who need help with daily living but do not need continuous nursing or medical care. A physical exam within 30 days before moving in is required.</p></details>
-        <details><summary>Do you provide nursing care?</summary><p>Nursing is provided by an independent licensed nursing partner with an RN and an LPN, who can visit residents in the home. Residents may also choose their own doctors, nurses, therapists or hospice. We help arrange every visit.</p></details>
-        <details><summary>How do residents pay?</summary><p>The Abernathy Residence is private-pay. Residents pay from their own income or savings, with help from family, or with long-term care insurance alongside private funds. Request a private consultation and our administrator will walk you through the arrangements.</p></details>
+        <details><summary>Do you provide nursing care?</summary><p>Yes. We provide licensed nurses for our residents: an RN and an LPN from our licensed nursing partner, who visit residents in the home. Residents keep their own doctors, and we help arrange every appointment.</p></details>
+        <details><summary>How do residents pay?</summary><p>We accept private pay only; we do not accept Medicaid or other government-funded placements. Residents pay from their own income or savings, with help from family, or with long-term care insurance alongside private funds. Request a private consultation and our administrator will walk you through the arrangements.</p></details>
         <details><summary>Can family and friends visit?</summary><p>Yes. Visiting hours are set together with each resident, and family may visit at any hour when a resident is seriously ill. Visits can be in the resident's room, the second living room or outdoors.</p></details>
         <details><summary>Why don't you list prices?</summary><p>Every person's needs are different, so charges are shared privately with the resident or their representative after a free care assessment, along with the written terms. Speak with our administrator to request a private consultation.</p></details>
       </div>
@@ -530,7 +530,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           <p>Your reference number is <b class="q-id"></b>. This is not yet a confirmed tour. Our administrator will contact you within one business day to confirm a time.</p>
           <a class="btn btn-line" href="tel:+16788982995">Speak with our administrator</a>
         </div>
-        <p class="q-note">The Abernathy Residence is private-pay. Your answers are kept private and used only to arrange your visit.</p>
+        <p class="q-note">We accept private pay only. Your answers are kept private and used only to arrange your visit.</p>
       </div>
       <div class="booking" id="tour-calendar">
         <div class="eyebrow">Available tour times</div>
@@ -546,7 +546,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
 <footer class="band">
   <div class="wrap">
     <span>&copy; 2026 The Abernathy Residence, Douglasville, Georgia</span>
-    <span>Nursing services are provided by an independent licensed provider.</span>
+    <span>Private pay only. Nursing is provided through our licensed nursing partner.</span>
   </div>
 </footer>
 
@@ -587,7 +587,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
     {s:'Placement & care',id:'nursing',type:'single',q:'Does the resident need continuous skilled nursing or medical treatment?',help:'For example a nurse on duty around the clock, IV treatment or a feeding tube.',opts:['Yes','No','Unsure']},
     {s:'Placement & care',id:'memory',type:'single',q:'Does the resident need memory-related or overnight supervision?',opts:['Memory support','Overnight supervision','Both','Neither','Unsure']},
     {s:'Placement & care',id:'accessibility',type:'textarea',optional:true,q:'Any accessibility needs or other care considerations we should know about?'},
-    {s:'Private pay',id:'funding',type:'single',q:'The Abernathy Residence is private-pay. How will monthly fees be funded?',opts:['Resident income','Savings','Family sponsor','Combination','Long-term care insurance with private funds','Government-funded placement only','Unsure']},
+    {s:'Private pay',id:'funding',type:'single',q:'We accept private pay only. How will monthly fees be funded?',opts:['Resident income','Savings','Family sponsor','Combination','Long-term care insurance with private funds','Government-funded placement only','Unsure']},
     {s:'Private pay',id:'sponsorRel',type:'text',when:function(a){return a.funding==='Family sponsor';},q:"What is the sponsor's relationship to the resident?"},
     {s:'Private pay',id:'sponsorDiscuss',type:'single',when:function(a){return a.funding==='Family sponsor';},q:'Is the sponsor willing to discuss payment with our administrator?',opts:['Yes','No','Possibly']},
     {s:'Private pay',id:'income',type:'single',optional:true,q:"What is the resident's approximate monthly income?",help:'Optional. This helps us plan a private conversation.',opts:['Under $1,000','$1,000–$1,499','$1,500–$1,999','$2,000–$2,999','$3,000–$3,999','$4,000–$5,999','$6,000+','Prefer to discuss privately']},
@@ -622,7 +622,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       '<label class="q-check"><input type="checkbox" name="consent"'+(a._consent?' checked':'')+'> I agree that The Abernathy Residence may contact me by phone, text or email about this inquiry. (Required)</label>'+
       '<label class="q-check"><input type="checkbox" name="reminders"'+(a._reminders?' checked':'')+'> Send me tour confirmations and reminders by email. You can opt out at any time.</label>'+
       '<p class="q-help">Submitting sends a tour request. It does not confirm a tour or admission; our administrator will contact you.</p></fieldset>';
-      skip.hidden=true; back.style.visibility='visible'; next.textContent='Submit tour request';
+      skip.hidden=true; back.style.visibility='visible'; next.hidden=false; next.textContent='Submit tour request';
       return;
     }
     var q=L[pos], v=a[q.id], h;
@@ -642,7 +642,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       h+='<div class="q-fields"><input type="'+t+'" name="'+q.id+'" value="'+esc(v)+'" aria-label="'+esc(q.q)+'"'+(q.auto?' autocomplete="'+q.auto+'"':'')+(q.type==='number'?' inputmode="numeric" min="'+q.min+'" max="'+q.max+'"':'')+(q.type==='date'?' min="'+today(1)+'"':'')+' maxlength="200"></div>';
     }
     stage.innerHTML=h+'</fieldset>';
-    skip.hidden=!q.optional; back.style.visibility=pos?'visible':'hidden'; next.textContent='Next';
+    skip.hidden=!q.optional; back.style.visibility=pos?'visible':'hidden'; next.textContent='Continue'; next.hidden=q.type==='single';
     stage.classList.remove('q-in'); void stage.offsetWidth; stage.classList.add('q-in');
   }
   function read(validate){
@@ -667,6 +667,8 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   back.addEventListener('click',function(){ if(pos>=list().length){ keepChecks(); go(list().length-1); return; } read(false); if(pos>0) go(pos-1); });
   skip.addEventListener('click',function(){ var q=list()[pos]; delete a[q.id]; go(pos+1); });
   stage.addEventListener('change',function(){ err.textContent=''; });
+  stage.addEventListener('click',function(e){ /* tapping an answer moves on, even when it was already chosen */
+    var q=list()[pos]; if(q&&q.type==='single'&&e.target.type==='radio'){ read(false); setTimeout(function(){ if(list()[pos]===q) go(pos+1); },220); } });
   stage.addEventListener('click',function(e){ var b=e.target.closest('.q-edit'); if(b){ keepChecks(); go(+b.dataset.i); } });
   function keepChecks(){ var c=stage.querySelector('[name=consent]'), r=stage.querySelector('[name=reminders]'); if(c) a._consent=c.checked; if(r) a._reminders=r.checked; }
   form.addEventListener('submit',function(e){
