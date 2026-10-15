@@ -188,6 +188,27 @@ details p{padding-bottom:22px;color:var(--muted)}
 .booking-frame{display:block;width:100%;height:700px;border:0;border-radius:18px;background:#fff}
 .booking .booking-fallback{font-size:14px;margin:14px 0 0}
 .booking-fallback a{text-decoration:underline;text-underline-offset:3px}
+.intake[hidden]{display:none!important}
+.q-progress{height:6px;border-radius:3px;background:var(--sand);overflow:hidden;margin-top:8px}
+.q-progress span{display:block;height:100%;width:0;background:var(--champ);transition:width .3s ease}
+.q-count{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mocha);margin-top:10px}
+.q-form fieldset{border:0;margin:18px 0 0;padding:0;min-width:0}
+.q-form legend{font-family:var(--serif);font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:500;padding:0;margin-bottom:6px}
+.q-help{font-size:15px;color:var(--muted);margin:0 0 14px}
+.q-opts{display:grid;gap:10px;margin-top:14px}
+.q-opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 18px;border-radius:18px;border:1.5px solid var(--nude);background:var(--card);color:var(--fg);font:inherit;font-size:16px;cursor:pointer}
+.q-opt:hover{border-color:var(--champ)}
+.q-opt input{accent-color:var(--deep);width:18px;height:18px;margin:0;flex:none}
+.q-opt:has(input:checked){border-color:var(--deep);background:var(--oat)}
+.q-fields{display:grid;gap:14px;margin-top:14px}
+.q-fields label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+.q-fields input,.q-fields select,.q-fields textarea{font:inherit;font-size:16px;color:var(--fg);background:var(--card);border:1.5px solid var(--nude);border-radius:14px;padding:12px 14px}
+.q-fields textarea{min-height:90px;resize:vertical}
+.q-nav{display:flex;gap:12px;justify-content:space-between;margin-top:22px}
+.q-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.q-error{color:#9A3B2E;font-size:15px;margin:10px 0 0;min-height:1em}
+.q-note{font-size:13px!important;color:var(--muted);margin:16px 0 0!important}
+.q-done .btn{margin-top:8px}
 @media (max-width:860px){.tour .wrap{grid-template-columns:1fr}.row{border-radius:28px}.booking-frame{height:760px}}
 
 footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
@@ -410,6 +431,28 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           <div><div class="k">Visit</div><div class="v">Douglasville, Georgia</div></div>
         </div>
       </div>
+      <div class="booking intake" id="tour-questions" data-endpoint="" hidden>
+        <div class="eyebrow">Request a tour</div>
+        <h3>Tell us a little first</h3>
+        <p>A few quick questions, one at a time, so we can prepare for your visit. It takes about two minutes.</p>
+        <div class="q-progress" aria-hidden="true"><span></span></div>
+        <div class="q-count" aria-live="polite"></div>
+        <form class="q-form" novalidate>
+          <div class="q-stage"></div>
+          <input type="text" name="website" class="q-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="q-nav">
+            <button type="button" class="btn btn-line q-back">Back</button>
+            <button type="submit" class="btn btn-dark q-next">Next</button>
+          </div>
+          <p class="q-error" role="alert"></p>
+        </form>
+        <div class="q-done" hidden>
+          <h3>Thank you</h3>
+          <p>We received your answers and will reach out within one business day. You can pick a tour time now below.</p>
+          <a class="btn btn-dark" href="#tour-calendar">Choose a tour time</a>
+        </div>
+        <p class="q-note">We never share your information. Prices are discussed privately after a care assessment.</p>
+      </div>
       <div class="booking" id="tour-calendar">
         <div class="eyebrow">Available tour times</div>
         <h3>Choose a day that works for you</h3>
@@ -428,6 +471,97 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   </div>
 </footer>
 
+<script>
+(function(){
+  var box=document.getElementById('tour-questions'); if(!box) return;
+  var endpoint=box.dataset.endpoint; if(!endpoint && !/[?&]qtest\b/.test(location.search)) return;
+  box.hidden=false;
+  var partner=function(a){return a.occupancy==='The prospective resident and their spouse'||a.occupancy==='The prospective resident and their partner';};
+  var AGES=['18–49','50–64','65–74','75–84','85+'];
+  /* Question configuration: add, remove or reorder questions here. "when" decides whether a question applies. */
+  var Q=[
+    {id:'filler',q:'Who is filling this out?',opts:['I would be the resident','A family member','A friend or legal guardian','A hospital, social worker or care professional']},
+    {id:'occupancy',q:'Who will be living at The Abernathy Residence?',opts:['Just the prospective resident','The prospective resident and their spouse','The prospective resident and their partner','Unsure at this time']},
+    {id:'roomPref',when:partner,q:'Would you prefer to share one room?',opts:['Yes, we would like to share one room','We prefer separate rooms','We would like to discuss available options','Unsure']},
+    {id:'bothCare',when:partner,q:'Will both people need personal care services?',opts:['Yes, both','Only the primary prospective resident','Neither / primarily residential accommodations','Unsure — would like an assessment']},
+    {id:'partnerAge',when:partner,q:"What is the spouse's or partner's age?",opts:['Under 18'].concat(AGES)},
+    {id:'partnerMoveIn',when:partner,q:'When would the spouse or partner move in?',opts:['At the same time','At a later date','Undecided']},
+    {id:'age',q:'How old is the prospective resident?',opts:AGES},
+    {id:'help',multi:true,q:'What help do they need day to day?',help:'Choose all that apply.',opts:['Bathing','Dressing and grooming','Medication reminders','Meals','Toileting','Getting around or moving from bed to chair','Memory support or supervision','No help needed right now']},
+    {id:'mobility',q:'How do they get around?',opts:['Walks on their own','Walks with a cane or walker','Uses a wheelchair and moves in and out of it with little help','Needs one or more people to help them move','Mostly stays in bed']},
+    {id:'nursing',q:'Do they need ongoing nursing care?',help:'For example daily wound care, IV treatment, a feeding tube or a nurse on duty around the clock.',opts:['No','Yes','Not sure']},
+    {id:'payment',multi:true,q:'We are a private-pay home. How do you plan to cover monthly costs?',help:'Choose all that apply.',opts:['Personal income or savings','Family support','Long-term care insurance','VA benefits, such as Aid and Attendance','Other or not sure yet']},
+    {id:'privatePay',q:'Are you able to pay privately each month?',opts:['Yes','I would like to discuss it first','Not sure']},
+    {id:'timing',q:'When are you hoping to move in?',opts:['As soon as possible','Within 30 days','In 1 to 3 months','In more than 3 months','Just exploring for now']},
+    {id:'package',q:'Which package interests you most?',opts:['Comfort','Signature','Premier','Not sure — help me choose']},
+    {id:'contact',fields:true,q:'How can we reach you?'}
+  ];
+  var form=box.querySelector('.q-form'), stage=box.querySelector('.q-stage'), back=box.querySelector('.q-back'), next=box.querySelector('.q-next'), err=box.querySelector('.q-error'), bar=box.querySelector('.q-progress span'), count=box.querySelector('.q-count');
+  var a={}, pos=0;
+  function list(){ return Q.filter(function(q){ return !q.when||q.when(a); }); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function render(){
+    var L=list(), q=L[pos]; err.textContent='';
+    bar.style.width=Math.round(pos/L.length*100)+'%';
+    count.textContent='Question '+(pos+1)+' of '+L.length;
+    var h='<fieldset><legend>'+esc(q.q)+'</legend>'+(q.help?'<p class="q-help">'+esc(q.help)+'</p>':'');
+    if(q.fields){
+      var c=a.contact||{};
+      h+='<div class="q-fields">'+
+        '<label>Your full name<input name="name" autocomplete="name" required value="'+esc(c.name||'')+'"></label>'+
+        '<label>Phone<input name="phone" type="tel" autocomplete="tel" required value="'+esc(c.phone||'')+'"></label>'+
+        '<label>Email<input name="email" type="email" autocomplete="email" value="'+esc(c.email||'')+'"></label>'+
+        '<label>Best way to reach you<select name="prefer">'+['Call','Text','Email'].map(function(o){return '<option'+(c.prefer===o?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
+        '<label>Resident’s first name (optional)<input name="residentName" value="'+esc(c.residentName||'')+'"></label>'+
+        '<label>Anything else we should know? (optional)<textarea name="notes">'+esc(c.notes||'')+'</textarea></label></div>';
+    } else {
+      var cur=a[q.id];
+      h+='<div class="q-opts">'+q.opts.map(function(o){
+        var on=q.multi?(cur||[]).indexOf(o)>-1:cur===o;
+        return '<label class="q-opt"><input type="'+(q.multi?'checkbox':'radio')+'" name="'+q.id+'" value="'+esc(o)+'"'+(on?' checked':'')+'>'+esc(o)+'</label>';
+      }).join('')+'</div>';
+    }
+    stage.innerHTML=h+'</fieldset>';
+    back.style.visibility=pos?'visible':'hidden';
+    next.textContent=pos===L.length-1?'Send':'Next';
+    var first=stage.querySelector('input,select'); if(first&&pos) first.focus({preventScroll:true});
+  }
+  function save(){
+    var q=list()[pos];
+    if(q.fields){
+      var c={}; ['name','phone','email','prefer','residentName','notes'].forEach(function(n){ c[n]=stage.querySelector('[name='+n+']').value.trim(); });
+      a.contact=c;
+      if(!c.name||c.phone.replace(/\D/g,'').length<10) return 'Please add your name and a 10-digit phone number.';
+      if(c.email&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.email)) return 'Please check the email address.';
+      return '';
+    }
+    var picked=[].slice.call(stage.querySelectorAll('input:checked')).map(function(i){return i.value;});
+    if(!picked.length) return 'Please choose an answer.';
+    if(q.multi&&picked.length>1&&picked.indexOf('No help needed right now')>-1) picked=picked.filter(function(p){return p!=='No help needed right now';});
+    a[q.id]=q.multi?picked:picked[0];
+    if(q.id==='occupancy'&&!partner(a)) ['roomPref','bothCare','partnerAge','partnerMoveIn'].forEach(function(k){ delete a[k]; });
+    return '';
+  }
+  stage.addEventListener('change',function(e){
+    var q=list()[pos];
+    if(!q.multi&&!q.fields&&e.target.type==='radio'){ setTimeout(function(){ if(!save()){ pos++; render(); } },180); }
+  });
+  back.addEventListener('click',function(){ save(); if(pos>0){ pos--; render(); } });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var m=save(); if(m){ err.textContent=m; return; }
+    if(pos<list().length-1){ pos++; render(); return; }
+    next.disabled=true; next.textContent='Sending…';
+    var payload=Object.assign({},a,{website:form.website.value,page:location.href,sent:new Date().toISOString()});
+    window.__lastInquiry=payload;
+    var done=function(){ form.hidden=true; box.querySelector('.q-progress').hidden=true; count.hidden=true; box.querySelector('.q-done').hidden=false; };
+    if(!endpoint){ done(); return; }
+    fetch(endpoint,{method:'POST',mode:'no-cors',body:new URLSearchParams({payload:JSON.stringify(payload)})})
+      .then(done).catch(function(){ next.disabled=false; next.textContent='Send'; err.textContent='We could not send that. Please try again or call (678) 898-2995.'; });
+  });
+  render();
+})();
+</script>
 <script>
 (function(){
   var box=document.getElementById('room-show'); if(!box) return;
