@@ -74,6 +74,21 @@ img.photo{border:0;padding:0;display:block;object-fit:cover;background:var(--san
 .soon-card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(440px,86%);background:var(--bg);border-radius:28px;padding:26px 28px;display:grid;gap:10px;justify-items:center;text-align:center}
 .soon-card b{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,30px);line-height:1.15}
 @media (max-width:560px){.film.soon{aspect-ratio:4/5}}
+.film.drone{position:relative;aspect-ratio:3/2;max-width:100%;background:#1c1512}
+.film.drone .dv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease}
+.film.drone .dv.on{opacity:1}
+.room-chip{position:absolute;left:22px;bottom:22px;padding:10px 20px;border-radius:999px;background:rgba(251,248,243,.92);color:#3A2E28;font-family:var(--serif);font-weight:500;font-size:clamp(17px,2.2vw,24px);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;pointer-events:none}
+.room-chip.show{opacity:1;transform:none}
+.drone-start,.drone-end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
+.drone-start{background:linear-gradient(rgba(34,26,22,.15),rgba(34,26,22,.45)),url(img/tour/05-exterior.jpg) center/cover;color:#fff}
+.drone-start .tier{color:#F4ECE2}
+.drone-start b{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4.4vw,48px);line-height:1.05}
+.play{width:76px;height:76px;border-radius:50%;border:0;background:rgba(251,248,243,.94);color:#3A2E28;display:flex;align-items:center;justify-content:center;cursor:pointer;padding-left:4px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .2s}
+.play:hover{transform:scale(1.06)}
+.drone-end{background:var(--bg)}
+.drone-end b{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,44px);line-height:1.05}
+.end-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+@media (max-width:560px){.film.drone{aspect-ratio:4/5}.room-chip{left:14px;bottom:14px}}
 .soft{border-radius:28px}
 
 .hero{background:var(--oat)}
@@ -234,12 +249,25 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
         <h2 id="home-title">Built within the last two years, made for daily living</h2>
         <p>Bright shared spaces, private bedrooms and a quiet residential street in Douglasville.</p>
       </div>
-      <div class="film soon" id="video-tour">
-        <img src="img/living.jpg" alt="" aria-hidden="true">
-        <div class="soon-card">
-          <span class="tier">Video tour</span>
-          <b>A walk through every room, coming soon</b>
-          <a class="btn btn-dark" href="#tour">Book a private tour today</a>
+      <div class="film drone" id="video-tour">
+        <video class="dv a" muted playsinline preload="auto" aria-label="Drone video tour of the home"></video>
+        <video class="dv b" muted playsinline preload="auto" aria-hidden="true"></video>
+        <div class="room-chip" aria-live="polite"></div>
+        <div class="drone-start">
+          <button class="play" type="button" id="play-tour" aria-label="Play the drone tour">
+            <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+          </button>
+          <span class="tier">Drone tour &middot; 75 seconds</span>
+          <b>Fly through every room</b>
+        </div>
+        <div class="drone-end" hidden>
+          <svg viewBox="0 0 120 120" width="72" height="72" aria-hidden="true"><path d="M24 50L57 23Q60 20.5 63 23L96 50" fill="none" stroke="var(--mocha)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 84C45 74 40 64 45.5 57.5C50 52.5 57 53.5 60 59.5C63 53.5 70 52.5 74.5 57.5C80 64 75 74 60 84Z" fill="var(--champ)"/><path d="M14 64C13 58 19 56 22 60L31 75C35 82 43 88 56 91L56 103C37 103 22 93 16 77Z" fill="var(--nude)" stroke="var(--taupe)" stroke-width="2"/><path d="M106 64C107 58 101 56 98 60L89 75C85 82 77 88 64 91L64 103C83 103 98 93 104 77Z" fill="var(--nude)" stroke="var(--taupe)" stroke-width="2"/></svg>
+          <b>Come see it in person</b>
+          <span class="tier">Book your private tour &middot; (678) 898-2995</span>
+          <div class="end-actions">
+            <a class="btn btn-dark" href="#tour">Book a tour</a>
+            <button class="btn btn-line" type="button" id="replay-tour">Watch again</button>
+          </div>
         </div>
       </div>
       <div class="gallery">
@@ -375,6 +403,54 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
 </footer>
 
 <script>
+(function(){
+  var base='https://lhfhnrxhxoxtzubtrkbx.supabase.co/storage/v1/object/public/ai-videos/user_2rwAXJO2khuFX6nC6bJg1LCd1f2/';
+  var clips=[
+    ['8600644f-8071-4378-8aa9-ac27edc0e2be','Welcome to The Abernathy Residence'],
+    ['dc64500f-1a66-472a-8107-5ae39b78f948','Front entrance'],
+    ['ab36d1a5-fec4-423a-a67a-f7890ff116e6','Entry'],
+    ['0ec9f55f-9cee-4eec-b788-da63796cfde8','Living room'],
+    ['63b7e832-2f25-4c89-9d25-653c167fd647','Dining room'],
+    ['92f44f4d-8944-4bc6-ad26-ba7edae47137','Kitchen'],
+    ['ca3a2138-5eeb-405c-b273-d90afc9fc1b1','Family room'],
+    ['5e415d99-b5de-44e0-b6e2-2cc440f3a675','Upstairs'],
+    ['43a7e89d-1353-46ce-be91-3bb5e5c1fa2d','Primary suite'],
+    ['e3783847-db9b-4b6d-8e7f-5231c03db72a','Primary bath'],
+    ['e7e3049f-093c-44d2-b4b6-7b60cc69c18e','Bedrooms'],
+    ['71da82b0-661f-4047-b27e-561c71b338fd','Backyard']
+  ];
+  var box=document.getElementById('video-tour'); if(!box) return;
+  var vids=box.querySelectorAll('.dv'), chip=box.querySelector('.room-chip');
+  var start=box.querySelector('.drone-start'), end=box.querySelector('.drone-end');
+  var i=0, cur=0, chipT;
+  function src(n){ return base+clips[n][0]+'.mp4'; }
+  function label(n){
+    if(n>0 && clips[n][1]===clips[n-1][1]) return;
+    chip.classList.remove('show'); clearTimeout(chipT);
+    chipT=setTimeout(function(){ chip.textContent=clips[n][1]; chip.classList.add('show'); }, 250);
+    setTimeout(function(){ if(i===n) chip.classList.remove('show'); }, 4200);
+  }
+  function load(v,n){ v.src=src(n); v.load(); }
+  function show(n){
+    var v=vids[cur], other=vids[1-cur];
+    v.classList.add('on'); other.classList.remove('on');
+    v.play().catch(function(){});
+    label(n);
+    if(n+1<clips.length) load(other,n+1);
+  }
+  function next(){
+    i++;
+    if(i>=clips.length){ vids[cur].classList.remove('on'); chip.classList.remove('show'); end.hidden=false; return; }
+    cur=1-cur; vids[cur].currentTime=0; show(i);
+  }
+  vids.forEach(function(v){ v.addEventListener('ended', function(){ if(v===vids[cur]) next(); }); });
+  function begin(){
+    start.hidden=true; end.hidden=true; i=0; cur=0;
+    load(vids[0],0); show(0);
+  }
+  document.getElementById('play-tour').addEventListener('click', begin);
+  document.getElementById('replay-tour').addEventListener('click', begin);
+})();
 document.querySelectorAll('.copy').forEach(function(b){
   b.addEventListener('click',function(){
     var t=b.getAttribute('data-copy');
