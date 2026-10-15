@@ -555,7 +555,9 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   var box=document.getElementById('tour-questions'); if(!box) return;
   var endpoint=box.dataset.endpoint, test=/[?&]qtest\b/.test(location.search);
   if(!endpoint && !test) return;
-  box.hidden=false;
+  if(endpoint && !test){ /* show only when the back office is the current version (it answers with JSON) */
+    fetch(endpoint).then(function(r){return r.json();}).then(function(r){ if(r&&r.ok) box.hidden=false; }).catch(function(){});
+  } else box.hidden=false;
   var partner=function(a){return /spouse|partner/.test(a.occupancy||'');};
   var notSelf=function(a){return a.submitter&&a.submitter!=='Resident';};
   var PREMIUM=['Signature Dining','Private Transportation & Concierge','Family Connection Concierge','Premium Excursions & Activities','Personal Pilates & Wellness','Premium Entertainment Upgrade','Other optional services'];
