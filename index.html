@@ -191,24 +191,60 @@ details p{padding-bottom:22px;color:var(--muted)}
 .intake[hidden]{display:none!important}
 .q-progress{height:6px;border-radius:3px;background:var(--sand);overflow:hidden;margin-top:8px}
 .q-progress span{display:block;height:100%;width:0;background:var(--champ);transition:width .3s ease}
-.q-count{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mocha);margin-top:10px}
+.q-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mocha);margin-top:10px}
 .q-form fieldset{border:0;margin:18px 0 0;padding:0;min-width:0}
 .q-form legend{font-family:var(--serif);font-size:clamp(24px,3vw,32px);line-height:1.15;font-weight:500;padding:0;margin-bottom:6px}
-.q-help{font-size:15px;color:var(--muted);margin:0 0 14px}
+.q-help{font-size:15px!important;color:var(--muted);margin:0 0 14px!important}
+.q-stage.q-in{animation:qin .25s ease}
+@keyframes qin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.q-stage.q-in{animation:none}}
 .q-opts{display:grid;gap:10px;margin-top:14px}
-.q-opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 18px;border-radius:18px;border:1.5px solid var(--nude);background:var(--card);color:var(--fg);font:inherit;font-size:16px;cursor:pointer}
+.q-opt{display:flex;align-items:center;gap:14px;width:100%;box-sizing:border-box;min-height:58px;text-align:left;padding:14px 18px;border-radius:18px;border:1.5px solid var(--nude);background:var(--card);color:var(--fg);font-size:17px;cursor:pointer;transition:border-color .2s,background .2s}
 .q-opt:hover{border-color:var(--champ)}
-.q-opt input{accent-color:var(--deep);width:18px;height:18px;margin:0;flex:none}
+.q-opt input{accent-color:var(--deep);width:20px;height:20px;margin:0;flex:none}
 .q-opt:has(input:checked){border-color:var(--deep);background:var(--oat)}
+.q-opt:has(input:focus-visible){outline:2px solid var(--deep);outline-offset:2px}
 .q-fields{display:grid;gap:14px;margin-top:14px}
+.q-two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .q-fields label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
-.q-fields input,.q-fields select,.q-fields textarea{font:inherit;font-size:16px;color:var(--fg);background:var(--card);border:1.5px solid var(--nude);border-radius:14px;padding:12px 14px}
-.q-fields textarea{min-height:90px;resize:vertical}
-.q-nav{display:flex;gap:12px;justify-content:space-between;margin-top:22px}
+.q-fields input,.q-fields select,.q-fields textarea{font:inherit;font-size:17px;color:var(--fg);background:var(--card);border:1.5px solid var(--nude);border-radius:14px;padding:14px 16px;min-width:0}
+.q-fields textarea{min-height:120px;resize:vertical}
+.q-nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:24px;flex-wrap:wrap}
+.q-right{display:flex;gap:10px;margin-left:auto}
+.q-right [hidden]{display:none}
 .q-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.q-error{color:#9A3B2E;font-size:15px;margin:10px 0 0;min-height:1em}
+.q-error{color:#9A3B2E;font-size:15px!important;margin:10px 0 0!important;min-height:1em}
 .q-note{font-size:13px!important;color:var(--muted);margin:16px 0 0!important}
+.q-review{display:grid;gap:0;margin:8px 0 18px;border-top:1px solid var(--nude)}
+.q-review div{padding:12px 0;border-bottom:1px solid var(--nude)}
+.q-review dt{font-size:14px;color:var(--muted)}
+.q-review dd{margin:4px 0 0;font-size:16px}
+.q-edit{margin-left:8px;border:0;background:none;color:var(--mocha);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer;padding:0}
+.q-check{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.45;margin-top:12px}
+.q-check input{accent-color:var(--deep);width:20px;height:20px;margin:2px 0 0;flex:none}
 .q-done .btn{margin-top:8px}
+@media (max-width:520px){.q-two{grid-template-columns:1fr}.q-nav .btn{padding:0 20px}}
+.lifestyle[hidden]{display:none!important}
+.svc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.svc-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--nude);border-radius:28px;overflow:hidden}
+.svc-card img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--sand)}
+.svc-mark{display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;background:var(--oat);color:var(--mocha)}
+.svc-mark svg{width:64px;height:64px}
+.svc-body{display:flex;flex-direction:column;gap:10px;padding:22px 24px 24px;flex:1}
+.svc-body h3{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.1;margin:0}
+.svc-body p{margin:0;color:var(--muted);font-size:16px}
+.svc-body ul{margin:4px 0 0;padding-left:18px;font-size:15px;line-height:1.5}
+.svc-body details{font-size:15px;color:var(--muted);background:none;border-radius:0;padding:0}
+.svc-body summary{display:inline-flex;font-family:var(--sans);font-size:15px;font-weight:400;padding:4px 0;color:var(--mocha);text-decoration:underline;text-underline-offset:3px}
+.svc-body summary::after{content:none}
+.svc-body details p{margin-top:6px;padding:0;font-size:15px}
+.svc-body .btn{margin-top:auto;align-self:flex-start}
+.svc-sub{font-family:var(--serif);font-size:clamp(28px,4vw,38px);font-weight:500;margin:56px 0 22px}
+.svc-dialog{border:0;border-radius:28px;padding:clamp(20px,4vw,36px);max-width:560px;width:calc(100% - 32px);background:var(--bg);color:var(--fg)}
+.svc-dialog::backdrop{background:rgba(42,32,27,.55)}
+.svc-dialog h3{font-family:var(--serif);font-size:30px;font-weight:500;margin:10px 0 0}
+@media (max-width:900px){.svc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.svc-grid{grid-template-columns:1fr}}
 @media (max-width:860px){.tour .wrap{grid-template-columns:1fr}.row{border-radius:28px}.booking-frame{height:760px}}
 
 footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
@@ -330,7 +366,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div class="section-head">
         <div class="eyebrow">Three packages</div>
         <h2 id="packages-title">Room and board in every package, with more support at each level</h2>
-        <p>Every plan is priced for the person after a free care assessment. Call us for a personal quote.</p>
+        <p>The Abernathy Residence is private-pay. Each plan is tailored to the person after a free care assessment. Request a private consultation to discuss accommodations.</p>
       </div>
       <div class="packs">
         <article class="pack">
@@ -380,6 +416,46 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
     </div>
   </section>
 
+  <section class="band section lifestyle" id="lifestyle" aria-labelledby="lifestyle-title" data-endpoint="https://script.google.com/macros/s/AKfycbwZqWVLN7bHR8dJwugpL-gVSfNsbDzQPHDPmJJYYpWjLNKFUaLVTy7OHkADDfTClp6v/exec" hidden>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Optional experiences</div>
+        <h2 id="lifestyle-title">Premium Lifestyle &amp; Concierge Services</h2>
+        <p>At The Abernathy Residence, personalized living goes beyond everyday care. Our optional lifestyle experiences offer additional comfort, convenience, wellness, entertainment, and meaningful connections.</p>
+      </div>
+      <div class="svc-grid" id="svc-grid"></div>
+      <div class="svc-packs-wrap" hidden>
+        <h3 class="svc-sub">Optional lifestyle packages</h3>
+        <div class="svc-grid" id="svc-packs"></div>
+      </div>
+      <p class="note">All services are optional and private-pay. Baseline care, meals, activities and resident rights never depend on a purchase. Details and written terms are shared privately before anything is arranged.</p>
+    </div>
+    <dialog class="svc-dialog" id="svc-dialog" aria-labelledby="svc-dialog-title">
+      <form class="svc-form" method="dialog" novalidate>
+        <div class="eyebrow">Request service information</div>
+        <h3 id="svc-dialog-title"></h3>
+        <div class="q-fields">
+          <label>Your name<input name="name" autocomplete="name" required maxlength="120"></label>
+          <label>Phone<input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label>
+          <label>Email (optional)<input name="email" type="email" autocomplete="email" maxlength="160"></label>
+          <label>Anything you would like us to know? (optional)<textarea name="message" maxlength="1000"></textarea></label>
+        </div>
+        <input type="text" name="website" class="q-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="q-check"><input type="checkbox" name="consent"> I agree that The Abernathy Residence may contact me about this request. (Required)</label>
+        <p class="q-error" role="alert"></p>
+        <div class="q-nav">
+          <button type="button" class="btn btn-line svc-close">Close</button>
+          <button type="submit" class="btn btn-dark svc-send">Request information</button>
+        </div>
+      </form>
+      <div class="svc-ok" hidden>
+        <h3>Thank you</h3>
+        <p>Your request <b class="svc-id"></b> was received. Our administrator will contact you privately with details.</p>
+        <button type="button" class="btn btn-dark svc-close">Close</button>
+      </div>
+    </dialog>
+  </section>
+
   <section class="band section" aria-labelledby="steps-title" style="padding-top:0">
     <div class="wrap">
       <div class="section-head">
@@ -389,7 +465,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <ol class="steps">
         <li><h3>Book a tour</h3><p>Choose a time online, or call or email to visit the home and meet the people who will care for you.</p></li>
         <li><h3>Care assessment</h3><p>A free conversation about daily needs, health, routines and preferences.</p></li>
-        <li><h3>Your plan and quote</h3><p>A written plan with the package that fits and its price.</p></li>
+        <li><h3>Your private consultation</h3><p>A written plan with the package that fits, with its charges and terms shared privately.</p></li>
         <li><h3>Settle in</h3><p>Choose your room, bring your favorite things, and make it home.</p></li>
       </ol>
     </div>
@@ -404,9 +480,9 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div class="faq-list">
         <details><summary>Who can live at The Abernathy Residence?</summary><p>Adults 18 and older, including seniors and adults with disabilities, who need help with daily living but do not need continuous nursing or medical care. A physical exam within 30 days before moving in is required.</p></details>
         <details><summary>Do you provide nursing care?</summary><p>Nursing is provided by an independent licensed nursing partner with an RN and an LPN, who can visit residents in the home. Residents may also choose their own doctors, nurses, therapists or hospice. We help arrange every visit.</p></details>
-        <details><summary>How do residents pay?</summary><p>Most residents pay privately, from savings, retirement income or long-term care insurance. Veterans and surviving spouses may qualify for VA Aid and Attendance benefits to help with the cost. Ask us and we can point you to the right place to apply.</p></details>
+        <details><summary>How do residents pay?</summary><p>The Abernathy Residence is private-pay. Residents pay from their own income or savings, with help from family, or with long-term care insurance alongside private funds. Request a private consultation and our administrator will walk you through the arrangements.</p></details>
         <details><summary>Can family and friends visit?</summary><p>Yes. Visiting hours are set together with each resident, and family may visit at any hour when a resident is seriously ill. Visits can be in the resident's room, the second living room or outdoors.</p></details>
-        <details><summary>Why don't you list prices?</summary><p>Every person's needs are different, so each plan is priced for the person after a free care assessment. Call us and we will give you a clear written quote.</p></details>
+        <details><summary>Why don't you list prices?</summary><p>Every person's needs are different, so charges are shared privately with the resident or their representative after a free care assessment, along with the written terms. Speak with our administrator to request a private consultation.</p></details>
       </div>
     </div>
   </section>
@@ -416,7 +492,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div>
         <div class="eyebrow">Book your private tour</div>
         <h2 id="tour-title" style="margin-top:18px">Come see the home</h2>
-        <p>Choose an open 45-minute tour time below, any day from 10 a.m. to 6 p.m. Eastern. You can also call or email us.</p>
+        <p>Answer a few questions below and our administrator will contact you to confirm a private tour. Tours run daily from 10 a.m. to 6 p.m. Eastern. You can also call or email us.</p>
       </div>
       <div class="contact">
         <div class="row">
@@ -432,26 +508,29 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
         </div>
       </div>
       <div class="booking intake" id="tour-questions" data-endpoint="https://script.google.com/macros/s/AKfycbwZqWVLN7bHR8dJwugpL-gVSfNsbDzQPHDPmJJYYpWjLNKFUaLVTy7OHkADDfTClp6v/exec" hidden>
-        <div class="eyebrow">Request a tour</div>
-        <h3>Tell us a little first</h3>
-        <p>A few quick questions, one at a time, so we can prepare for your visit. It takes about two minutes.</p>
+        <div class="eyebrow">Schedule a private tour</div>
+        <h3>Request your tour</h3>
+        <p>A few questions, one at a time, so we can prepare for your visit. It takes about five minutes, and you can go back at any time.</p>
         <div class="q-progress" aria-hidden="true"><span></span></div>
-        <div class="q-count" aria-live="polite"></div>
+        <div class="q-meta"><span class="q-section"></span><span class="q-count" aria-live="polite"></span></div>
         <form class="q-form" novalidate>
           <div class="q-stage"></div>
           <input type="text" name="website" class="q-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="q-nav">
             <button type="button" class="btn btn-line q-back">Back</button>
-            <button type="submit" class="btn btn-dark q-next">Next</button>
+            <span class="q-right">
+              <button type="button" class="btn btn-line q-skip" hidden>Skip</button>
+              <button type="submit" class="btn btn-dark q-next">Next</button>
+            </span>
           </div>
           <p class="q-error" role="alert"></p>
         </form>
-        <div class="q-done" hidden>
-          <h3>Thank you</h3>
-          <p>We received your answers and will reach out within one business day. You can pick a tour time now below.</p>
-          <a class="btn btn-dark" href="#tour-calendar">Choose a tour time</a>
+        <div class="q-done" hidden tabindex="-1">
+          <h3>Your tour request was received</h3>
+          <p>Your reference number is <b class="q-id"></b>. This is not yet a confirmed tour. Our administrator will contact you within one business day to confirm a time.</p>
+          <a class="btn btn-line" href="tel:+16788982995">Speak with our administrator</a>
         </div>
-        <p class="q-note">We never share your information. Prices are discussed privately after a care assessment.</p>
+        <p class="q-note">The Abernathy Residence is private-pay. Your answers are kept private and used only to arrange your visit.</p>
       </div>
       <div class="booking" id="tour-calendar">
         <div class="eyebrow">Available tour times</div>
@@ -474,92 +553,186 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
 <script>
 (function(){
   var box=document.getElementById('tour-questions'); if(!box) return;
-  var endpoint=box.dataset.endpoint; if(!endpoint && !/[?&]qtest\b/.test(location.search)) return;
+  var endpoint=box.dataset.endpoint, test=/[?&]qtest\b/.test(location.search);
+  if(!endpoint && !test) return;
   box.hidden=false;
-  var partner=function(a){return a.occupancy==='The prospective resident and their spouse'||a.occupancy==='The prospective resident and their partner';};
-  var AGES=['18–49','50–64','65–74','75–84','85+'];
-  /* Question configuration: add, remove or reorder questions here. "when" decides whether a question applies. */
+  var partner=function(a){return /spouse|partner/.test(a.occupancy||'');};
+  var notSelf=function(a){return a.submitter&&a.submitter!=='Resident';};
+  var PREMIUM=['Signature Dining','Private Transportation & Concierge','Family Connection Concierge','Premium Excursions & Activities','Personal Pilates & Wellness','Premium Entertainment Upgrade','Other optional services'];
+  /* Question configuration. type: single | multi | text | number | tel | email | date | daterange | textarea.
+     "when" decides whether a question applies; "optional" adds a Skip button. */
   var Q=[
-    {id:'filler',q:'Who is filling this out?',opts:['I would be the resident','A family member','A friend or legal guardian','A hospital, social worker or care professional']},
-    {id:'occupancy',q:'Who will be living at The Abernathy Residence?',opts:['Just the prospective resident','The prospective resident and their spouse','The prospective resident and their partner','Unsure at this time']},
-    {id:'roomPref',when:partner,q:'Would you prefer to share one room?',opts:['Yes, we would like to share one room','We prefer separate rooms','We would like to discuss available options','Unsure']},
-    {id:'bothCare',when:partner,q:'Will both people need personal care services?',opts:['Yes, both','Only the primary prospective resident','Neither / primarily residential accommodations','Unsure — would like an assessment']},
-    {id:'partnerAge',when:partner,q:"What is the spouse's or partner's age?",opts:['Under 18'].concat(AGES)},
-    {id:'partnerMoveIn',when:partner,q:'When would the spouse or partner move in?',opts:['At the same time','At a later date','Undecided']},
-    {id:'age',q:'How old is the prospective resident?',opts:AGES},
-    {id:'help',multi:true,q:'What help do they need day to day?',help:'Choose all that apply.',opts:['Bathing','Dressing and grooming','Medication reminders','Meals','Toileting','Getting around or moving from bed to chair','Memory support or supervision','No help needed right now']},
-    {id:'mobility',q:'How do they get around?',opts:['Walks on their own','Walks with a cane or walker','Uses a wheelchair and moves in and out of it with little help','Needs one or more people to help them move','Mostly stays in bed']},
-    {id:'nursing',q:'Do they need ongoing nursing care?',help:'For example daily wound care, IV treatment, a feeding tube or a nurse on duty around the clock.',opts:['No','Yes','Not sure']},
-    {id:'payment',multi:true,q:'We are a private-pay home. How do you plan to cover monthly costs?',help:'Choose all that apply.',opts:['Personal income or savings','Family support','Long-term care insurance','VA benefits, such as Aid and Attendance','Other or not sure yet']},
-    {id:'privatePay',q:'Are you able to pay privately each month?',opts:['Yes','I would like to discuss it first','Not sure']},
-    {id:'timing',q:'When are you hoping to move in?',opts:['As soon as possible','Within 30 days','In 1 to 3 months','In more than 3 months','Just exploring for now']},
-    {id:'package',q:'Which package interests you most?',opts:['Comfort','Signature','Premier','Not sure — help me choose']},
-    {id:'contact',fields:true,q:'How can we reach you?'}
+    {s:'Resident & contact',id:'submitter',type:'single',q:'Who is submitting this inquiry?',opts:['Resident','Family member','Authorized representative','Referral professional','Other']},
+    {s:'Resident & contact',id:'residentName',type:'text',q:"What is the resident's full name?",auto:'off'},
+    {s:'Resident & contact',id:'residentAge',type:'number',q:"What is the resident's age?",min:1,max:120},
+    {s:'Resident & contact',id:'contactName',type:'text',when:notSelf,q:'What is your name?',auto:'name'},
+    {s:'Resident & contact',id:'relationship',type:'text',when:notSelf,q:'What is your relationship to the resident?',help:'For example: daughter, son, guardian, case manager.'},
+    {s:'Resident & contact',id:'phone',type:'tel',q:'What is the best phone number to reach you?',auto:'tel'},
+    {s:'Resident & contact',id:'email',type:'email',optional:true,q:'What is your email address?',help:'We use it to send your tour details.',auto:'email'},
+    {s:'Resident & contact',id:'occupancy',type:'single',q:'Who will be living at The Abernathy Residence?',opts:['Just the prospective resident','The prospective resident and their spouse','The prospective resident and their partner','Unsure at this time']},
+    {s:'Resident & contact',id:'roomPref',type:'single',when:partner,q:'Would you prefer to share one room?',opts:['Yes, we would like to share one room','We prefer separate rooms','We would like to discuss available options','Unsure']},
+    {s:'Resident & contact',id:'bothCare',type:'single',when:partner,q:'Will both people need personal care services?',opts:['Yes, both','Only the primary prospective resident','Neither / primarily residential accommodations','Unsure — would like an assessment']},
+    {s:'Resident & contact',id:'partnerAge',type:'single',when:partner,q:"What is the spouse's or partner's age?",opts:['Under 18','18–49','50–64','65–74','75–84','85+']},
+    {s:'Resident & contact',id:'partnerMoveIn',type:'single',when:partner,q:'When would the spouse or partner move in?',opts:['At the same time','At a later date','Undecided']},
+    {s:'Placement & care',id:'placement',type:'single',q:'What type of stay are you looking for?',opts:['Long-term personal care home','Respite stay','Housing with personal assistance','Housing only','Unsure']},
+    {s:'Placement & care',id:'respite',type:'daterange',when:function(a){return a.placement==='Respite stay';},q:'What are the arrival and departure dates for the respite stay?'},
+    {s:'Placement & care',id:'housingOnly',type:'single',when:function(a){return a.placement==='Housing only';},q:'The Abernathy Residence is a personal care home: housing comes with personal care, supervision and meals. How would you like to proceed?',opts:['I would like to discuss this with the administrator','I understand and would like to continue','I am looking for housing without care']},
+    {s:'Placement & care',id:'living',type:'single',q:'Where does the resident live now?',opts:['At home alone','At home with family','At home with a caregiver','Assisted living or another care home','Hospital or rehabilitation','Other']},
+    {s:'Placement & care',id:'timing',type:'single',q:'When would you like to move in?',opts:['Within 7 days','2–4 weeks','1–3 months','Later','Just exploring']},
+    {s:'Placement & care',id:'adl',type:'multi',q:'Does the resident need help with any of these?',help:'Choose all that apply.',opts:['Bathing','Dressing','Grooming','Eating','Toileting','None of these'],none:'None of these'},
+    {s:'Placement & care',id:'mobility',type:'single',q:'How does the resident get around?',opts:['Independent','Cane or walker','Wheelchair','Needs help with transfers','Unsure']},
+    {s:'Placement & care',id:'meds',type:'single',q:'Does the resident need help taking medication?',opts:['Yes','No','Unsure']},
+    {s:'Placement & care',id:'nursing',type:'single',q:'Does the resident need continuous skilled nursing or medical treatment?',help:'For example a nurse on duty around the clock, IV treatment or a feeding tube.',opts:['Yes','No','Unsure']},
+    {s:'Placement & care',id:'memory',type:'single',q:'Does the resident need memory-related or overnight supervision?',opts:['Memory support','Overnight supervision','Both','Neither','Unsure']},
+    {s:'Placement & care',id:'accessibility',type:'textarea',optional:true,q:'Any accessibility needs or other care considerations we should know about?'},
+    {s:'Private pay',id:'funding',type:'single',q:'The Abernathy Residence is private-pay. How will monthly fees be funded?',opts:['Resident income','Savings','Family sponsor','Combination','Long-term care insurance with private funds','Government-funded placement only','Unsure']},
+    {s:'Private pay',id:'sponsorRel',type:'text',when:function(a){return a.funding==='Family sponsor';},q:"What is the sponsor's relationship to the resident?"},
+    {s:'Private pay',id:'sponsorDiscuss',type:'single',when:function(a){return a.funding==='Family sponsor';},q:'Is the sponsor willing to discuss payment with our administrator?',opts:['Yes','No','Possibly']},
+    {s:'Private pay',id:'income',type:'single',optional:true,q:"What is the resident's approximate monthly income?",help:'Optional. This helps us plan a private conversation.',opts:['Under $1,000','$1,000–$1,499','$1,500–$1,999','$2,000–$2,999','$3,000–$3,999','$4,000–$5,999','$6,000+','Prefer to discuss privately']},
+    {s:'Private pay',id:'familyContrib',type:'single',q:'Will family or a sponsor contribute?',opts:['Yes','No','Possibly']},
+    {s:'Private pay',id:'payCoordinator',type:'text',q:'Who will coordinate payment?',help:'A name and relationship, for example "Maria, daughter".'},
+    {s:'Private pay',id:'discussAdmin',type:'single',q:'Would you like to discuss private-pay arrangements with our administrator?',opts:['Yes','No','Maybe later']},
+    {s:'Private pay',id:'understandPrivatePay',type:'single',q:'Do you understand that this residence requires private-pay arrangements?',opts:['Yes','Need clarification']},
+    {s:'Tour & lifestyle',id:'residentInterested',type:'single',q:'Is the resident interested in exploring this placement?',opts:['Yes','Not sure yet','We have not discussed it yet','No']},
+    {s:'Tour & lifestyle',id:'attendees',type:'text',q:'Who will attend the tour?',help:'For example: "Me and my mother".'},
+    {s:'Tour & lifestyle',id:'tourDate',type:'date',q:'What is your preferred tour date?',help:'This is a request. Our administrator will confirm the time with you.'},
+    {s:'Tour & lifestyle',id:'tourWindow',type:'single',q:'What time of day works best?',opts:['Morning (10 a.m. – 12 p.m.)','Midday (12 – 2 p.m.)','Afternoon (2 – 4 p.m.)','Late afternoon (4 – 6 p.m.)']},
+    {s:'Tour & lifestyle',id:'premiumInterest',type:'single',q:'Would you like information about our optional premium lifestyle services?',opts:['Yes','No','Maybe']},
+    {s:'Tour & lifestyle',id:'premiumCats',type:'multi',optional:true,when:function(a){return /Yes|Maybe/.test(a.premiumInterest||'');},q:'Which services interest you?',help:'Choose all that apply.',opts:PREMIUM},
+    {s:'Tour & lifestyle',id:'questions',type:'textarea',optional:true,q:'Do you have any other questions for us?'}
   ];
-  var form=box.querySelector('.q-form'), stage=box.querySelector('.q-stage'), back=box.querySelector('.q-back'), next=box.querySelector('.q-next'), err=box.querySelector('.q-error'), bar=box.querySelector('.q-progress span'), count=box.querySelector('.q-count');
-  var a={}, pos=0;
+  var LABEL={respite:'Respite dates'};
+  var form=box.querySelector('.q-form'), stage=box.querySelector('.q-stage'), back=box.querySelector('.q-back'), skip=box.querySelector('.q-skip'), next=box.querySelector('.q-next'), err=box.querySelector('.q-error'), bar=box.querySelector('.q-progress span'), count=box.querySelector('.q-count'), sec=box.querySelector('.q-section');
+  var a={}, pos=0, started=Date.now(), token=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Math.random()).slice(2)+Date.now(), sending=false;
   function list(){ return Q.filter(function(q){ return !q.when||q.when(a); }); }
-  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function today(n){ var d=new Date(Date.now()+(n||0)*864e5); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function fmt(q){ var v=a[q.id]; if(q.type==='daterange') return a.respiteStart?(a.respiteStart+' to '+a.respiteEnd):''; return Array.isArray(v)?v.join(', '):(v==null?'':v); }
+  function prune(){ var ids=list().map(function(q){return q.id;}); Q.forEach(function(q){ if(ids.indexOf(q.id)<0){ delete a[q.id]; if(q.id==='respite'){ delete a.respiteStart; delete a.respiteEnd; } } }); }
   function render(){
-    var L=list(), q=L[pos]; err.textContent='';
-    bar.style.width=Math.round(pos/L.length*100)+'%';
-    count.textContent='Question '+(pos+1)+' of '+L.length;
-    var h='<fieldset><legend>'+esc(q.q)+'</legend>'+(q.help?'<p class="q-help">'+esc(q.help)+'</p>':'');
-    if(q.fields){
-      var c=a.contact||{};
-      h+='<div class="q-fields">'+
-        '<label>Your full name<input name="name" autocomplete="name" required value="'+esc(c.name||'')+'"></label>'+
-        '<label>Phone<input name="phone" type="tel" autocomplete="tel" required value="'+esc(c.phone||'')+'"></label>'+
-        '<label>Email<input name="email" type="email" autocomplete="email" value="'+esc(c.email||'')+'"></label>'+
-        '<label>Best way to reach you<select name="prefer">'+['Call','Text','Email'].map(function(o){return '<option'+(c.prefer===o?' selected':'')+'>'+o+'</option>';}).join('')+'</select></label>'+
-        '<label>Resident’s first name (optional)<input name="residentName" value="'+esc(c.residentName||'')+'"></label>'+
-        '<label>Anything else we should know? (optional)<textarea name="notes">'+esc(c.notes||'')+'</textarea></label></div>';
-    } else {
-      var cur=a[q.id];
+    var L=list(), review=pos>=L.length; err.textContent='';
+    bar.style.width=Math.round(Math.min(pos,L.length)/(L.length+1)*100)+'%';
+    if(review){
+      sec.textContent='Review'; count.textContent='Review your answers';
+      stage.innerHTML='<fieldset><legend>Please review your answers</legend><dl class="q-review">'+L.map(function(q,i){
+        return '<div><dt>'+esc(LABEL[q.id]||q.q)+'</dt><dd>'+(esc(fmt(q))||'<em>Skipped</em>')+' <button type="button" class="q-edit" data-i="'+i+'">Edit</button></dd></div>';
+      }).join('')+'</dl>'+
+      '<label class="q-check"><input type="checkbox" name="consent"'+(a._consent?' checked':'')+'> I agree that The Abernathy Residence may contact me by phone, text or email about this inquiry. (Required)</label>'+
+      '<label class="q-check"><input type="checkbox" name="reminders"'+(a._reminders?' checked':'')+'> Send me tour confirmations and reminders by email. You can opt out at any time.</label>'+
+      '<p class="q-help">Submitting sends a tour request. It does not confirm a tour or admission; our administrator will contact you.</p></fieldset>';
+      skip.hidden=true; back.style.visibility='visible'; next.textContent='Submit tour request';
+      return;
+    }
+    var q=L[pos], v=a[q.id], h;
+    sec.textContent=q.s; count.textContent='Question '+(pos+1)+' of '+L.length;
+    h='<fieldset><legend>'+esc(q.q)+'</legend>'+(q.help?'<p class="q-help">'+esc(q.help)+'</p>':'');
+    if(q.type==='single'||q.type==='multi'){
       h+='<div class="q-opts">'+q.opts.map(function(o){
-        var on=q.multi?(cur||[]).indexOf(o)>-1:cur===o;
-        return '<label class="q-opt"><input type="'+(q.multi?'checkbox':'radio')+'" name="'+q.id+'" value="'+esc(o)+'"'+(on?' checked':'')+'>'+esc(o)+'</label>';
+        var on=q.type==='multi'?(v||[]).indexOf(o)>-1:v===o;
+        return '<label class="q-opt"><input type="'+(q.type==='multi'?'checkbox':'radio')+'" name="'+q.id+'" value="'+esc(o)+'"'+(on?' checked':'')+'><span>'+esc(o)+'</span></label>';
       }).join('')+'</div>';
+    } else if(q.type==='textarea'){
+      h+='<div class="q-fields"><textarea name="'+q.id+'" maxlength="1500" aria-label="'+esc(q.q)+'">'+esc(v)+'</textarea></div>';
+    } else if(q.type==='daterange'){
+      h+='<div class="q-fields q-two"><label>Arrival<input type="date" name="respiteStart" min="'+today(1)+'" value="'+esc(a.respiteStart)+'"></label><label>Departure<input type="date" name="respiteEnd" min="'+today(1)+'" value="'+esc(a.respiteEnd)+'"></label></div>';
+    } else {
+      var t={text:'text',number:'number',tel:'tel',email:'email',date:'date'}[q.type];
+      h+='<div class="q-fields"><input type="'+t+'" name="'+q.id+'" value="'+esc(v)+'" aria-label="'+esc(q.q)+'"'+(q.auto?' autocomplete="'+q.auto+'"':'')+(q.type==='number'?' inputmode="numeric" min="'+q.min+'" max="'+q.max+'"':'')+(q.type==='date'?' min="'+today(1)+'"':'')+' maxlength="200"></div>';
     }
     stage.innerHTML=h+'</fieldset>';
-    back.style.visibility=pos?'visible':'hidden';
-    next.textContent=pos===L.length-1?'Send':'Next';
-    var first=stage.querySelector('input,select'); if(first&&pos) first.focus({preventScroll:true});
+    skip.hidden=!q.optional; back.style.visibility=pos?'visible':'hidden'; next.textContent='Next';
+    stage.classList.remove('q-in'); void stage.offsetWidth; stage.classList.add('q-in');
   }
-  function save(){
-    var q=list()[pos];
-    if(q.fields){
-      var c={}; ['name','phone','email','prefer','residentName','notes'].forEach(function(n){ c[n]=stage.querySelector('[name='+n+']').value.trim(); });
-      a.contact=c;
-      if(!c.name||c.phone.replace(/\D/g,'').length<10) return 'Please add your name and a 10-digit phone number.';
-      if(c.email&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.email)) return 'Please check the email address.';
-      return '';
-    }
-    var picked=[].slice.call(stage.querySelectorAll('input:checked')).map(function(i){return i.value;});
-    if(!picked.length) return 'Please choose an answer.';
-    if(q.multi&&picked.length>1&&picked.indexOf('No help needed right now')>-1) picked=picked.filter(function(p){return p!=='No help needed right now';});
-    a[q.id]=q.multi?picked:picked[0];
-    if(q.id==='occupancy'&&!partner(a)) ['roomPref','bothCare','partnerAge','partnerMoveIn'].forEach(function(k){ delete a[k]; });
+  function read(validate){
+    var L=list(), q=L[pos]; if(!q) return '';
+    var f=function(n){ var el=stage.querySelector('[name="'+n+'"]'); return el?el.value.trim():''; };
+    if(q.type==='single'){ var c=stage.querySelector('input:checked'); if(c) a[q.id]=c.value; }
+    else if(q.type==='multi'){ var p=[].slice.call(stage.querySelectorAll('input:checked')).map(function(i){return i.value;}); if(q.none&&p.length>1) p=p.filter(function(x){return x!==q.none;}); a[q.id]=p; }
+    else if(q.type==='daterange'){ a.respiteStart=f('respiteStart'); a.respiteEnd=f('respiteEnd'); }
+    else a[q.id]=f(q.id);
+    if(!validate) return '';
+    var v=a[q.id];
+    if(q.type==='daterange'){ if(!a.respiteStart||!a.respiteEnd) return 'Please choose both dates.'; if(a.respiteEnd<a.respiteStart) return 'The departure date must be after the arrival date.'; return ''; }
+    var empty=v==null||v===''||(Array.isArray(v)&&!v.length);
+    if(empty) return q.optional?'skip':(q.type==='single'||q.type==='multi'?'Please choose an answer.':'Please fill this in.');
+    if(q.type==='tel'&&v.replace(/\D/g,'').length<10) return 'Please enter a 10-digit phone number.';
+    if(q.type==='email'&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return 'Please check the email address.';
+    if(q.type==='number'&&!(+v>=q.min&&+v<=q.max)) return 'Please enter an age between '+q.min+' and '+q.max+'.';
+    if(q.type==='date'&&v<today(1)) return 'Please choose a date from tomorrow onward.';
     return '';
   }
-  stage.addEventListener('change',function(e){
-    var q=list()[pos];
-    if(!q.multi&&!q.fields&&e.target.type==='radio'){ setTimeout(function(){ if(!save()){ pos++; render(); } },180); }
-  });
-  back.addEventListener('click',function(){ save(); if(pos>0){ pos--; render(); } });
+  function go(n){ pos=n; prune(); render(); var t=stage.querySelector('input,textarea'); if(t) t.focus({preventScroll:true}); }
+  back.addEventListener('click',function(){ if(pos>=list().length){ keepChecks(); go(list().length-1); return; } read(false); if(pos>0) go(pos-1); });
+  skip.addEventListener('click',function(){ var q=list()[pos]; delete a[q.id]; go(pos+1); });
+  stage.addEventListener('change',function(){ err.textContent=''; });
+  stage.addEventListener('click',function(e){ var b=e.target.closest('.q-edit'); if(b){ keepChecks(); go(+b.dataset.i); } });
+  function keepChecks(){ var c=stage.querySelector('[name=consent]'), r=stage.querySelector('[name=reminders]'); if(c) a._consent=c.checked; if(r) a._reminders=r.checked; }
   form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var m=save(); if(m){ err.textContent=m; return; }
-    if(pos<list().length-1){ pos++; render(); return; }
-    next.disabled=true; next.textContent='Sending…';
-    var payload=Object.assign({},a,{website:form.website.value,page:location.href,sent:new Date().toISOString()});
+    e.preventDefault(); if(sending) return;
+    var L=list();
+    if(pos<L.length){ var m=read(true); if(m==='skip') m='Please fill this in, or choose Skip.'; if(m){ err.textContent=m; return; } go(pos+1); return; }
+    keepChecks();
+    if(!a._consent){ err.textContent='Please agree to be contacted so we can arrange your tour.'; return; }
+    var answers={}; Object.keys(a).forEach(function(k){ if(k[0]!=='_') answers[k]=a[k]; });
+    var payload={kind:'inquiry',token:token,answers:answers,consent:true,reminders:!!a._reminders,elapsed:Date.now()-started,
+      source:(new URLSearchParams(location.search).get('utm_source')||document.referrer||'direct').slice(0,200),website:form.website.value};
     window.__lastInquiry=payload;
-    var done=function(){ form.hidden=true; box.querySelector('.q-progress').hidden=true; count.hidden=true; box.querySelector('.q-done').hidden=false; };
-    if(!endpoint){ done(); return; }
-    fetch(endpoint,{method:'POST',mode:'no-cors',body:new URLSearchParams({payload:JSON.stringify(payload)})})
-      .then(done).catch(function(){ next.disabled=false; next.textContent='Send'; err.textContent='We could not send that. Please try again or call (678) 898-2995.'; });
+    sending=true; next.disabled=true; next.textContent='Sending…';
+    var ok=function(id){ form.hidden=true; box.querySelector('.q-progress').hidden=true; count.hidden=true; sec.hidden=true;
+      var d=box.querySelector('.q-done'); d.querySelector('.q-id').textContent=id; d.hidden=false; d.scrollIntoView({block:'center'}); };
+    var fail=function(msg){ sending=false; next.disabled=false; next.textContent='Submit tour request'; err.textContent=msg||'We could not send that. Please try again, or call (678) 898-2995.'; };
+    if(!endpoint){ ok('TEST-ONLY'); return; }
+    fetch(endpoint,{method:'POST',body:new URLSearchParams({payload:JSON.stringify(payload)})})
+      .then(function(r){ return r.json(); })
+      .then(function(r){ if(r&&r.ok) ok(r.id); else fail(r&&r.error==='busy'?'We are receiving many requests right now. Please try again in a minute.':null); })
+      .catch(function(){ fail(); });
   });
   render();
+})();
+</script>
+<script>
+(function(){
+  var sec=document.getElementById('lifestyle'); if(!sec) return;
+  var endpoint=sec.dataset.endpoint; if(!endpoint) return;
+  var grid=document.getElementById('svc-grid'), packs=document.getElementById('svc-packs'), dlg=document.getElementById('svc-dialog');
+  var form=dlg.querySelector('.svc-form'), err=form.querySelector('.q-error'), send=form.querySelector('.svc-send'), current='', token='';
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function safeImg(u){ u=String(u||''); return /^(img\/[\w\/.-]+|https:\/\/[^\s"'<>]+)$/.test(u)?u:''; }
+  var mark='<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M24 50L57 23Q60 20.5 63 23L96 50" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 84C45 74 40 64 45.5 57.5C50 52.5 57 53.5 60 59.5C63 53.5 70 52.5 74.5 57.5C80 64 75 74 60 84Z" fill="#C9AE8A"/></svg>';
+  function card(s){
+    var img=safeImg(s.image);
+    return '<article class="svc-card">'+(img?'<img src="'+esc(img)+'" alt="" loading="lazy">':'<div class="svc-mark">'+mark+'</div>')+
+      '<div class="svc-body"><h3>'+esc(s.name)+'</h3><p>'+esc(s.description)+'</p>'+
+      (s.benefits&&s.benefits.length?'<ul>'+s.benefits.map(function(b){return '<li>'+esc(b)+'</li>';}).join('')+'</ul>':'')+
+      (s.more?'<details><summary>Learn more</summary><p>'+esc(s.more)+'</p></details>':'')+
+      '<button type="button" class="btn btn-line svc-ask" data-name="'+esc(s.name)+'">'+(s.type==='Package'?'Discuss accommodations':'Request information')+'</button></div></article>';
+  }
+  fetch(endpoint).then(function(r){return r.json();}).then(function(r){
+    var list=(r&&r.services)||[], svc=list.filter(function(s){return s.type!=='Package';}), pk=list.filter(function(s){return s.type==='Package';});
+    if(!list.length) return;
+    grid.innerHTML=svc.map(card).join(''); grid.hidden=!svc.length;
+    if(pk.length){ packs.innerHTML=pk.map(card).join(''); sec.querySelector('.svc-packs-wrap').hidden=false; }
+    sec.hidden=false;
+  }).catch(function(){});
+  sec.addEventListener('click',function(e){
+    var b=e.target.closest('.svc-ask'); if(b){ current=b.dataset.name; token=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Math.random()).slice(2);
+      dlg.querySelector('#svc-dialog-title').textContent=current; form.hidden=false; dlg.querySelector('.svc-ok').hidden=true; err.textContent='';
+      send.disabled=false; send.textContent='Request information'; dlg.showModal(); return; }
+    if(e.target.closest('.svc-close')) dlg.close();
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=function(n){return form[n].value.trim();};
+    if(!v('name')||v('phone').replace(/\D/g,'').length<10){ err.textContent='Please add your name and a 10-digit phone number.'; return; }
+    if(v('email')&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('email'))){ err.textContent='Please check the email address.'; return; }
+    if(!form.consent.checked){ err.textContent='Please agree to be contacted about this request.'; return; }
+    send.disabled=true; send.textContent='Sending…'; err.textContent='';
+    var payload={kind:'service',token:token,consent:true,website:v('website'),answers:{service:current,name:v('name'),phone:v('phone'),email:v('email'),message:v('message')}};
+    fetch(endpoint,{method:'POST',body:new URLSearchParams({payload:JSON.stringify(payload)})}).then(function(r){return r.json();}).then(function(r){
+      if(!r||!r.ok) throw 0;
+      form.hidden=true; dlg.querySelector('.svc-id').textContent=r.id; dlg.querySelector('.svc-ok').hidden=false; form.reset();
+    }).catch(function(){ send.disabled=false; send.textContent='Request information'; err.textContent='We could not send that. Please try again, or call (678) 898-2995.'; });
+  });
 })();
 </script>
 <script>
