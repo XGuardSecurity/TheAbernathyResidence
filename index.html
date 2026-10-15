@@ -76,9 +76,9 @@ img.photo{border:0;padding:0;display:block;object-fit:cover;background:var(--san
 @media (max-width:560px){.film.soon{aspect-ratio:4/5}}
 [hidden]{display:none!important}
 .film.drone{position:relative;aspect-ratio:3/2;max-width:100%;background:#1c1512}
-.film.drone .dv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease}
+.film.drone .dv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .film.drone .dv.on{opacity:1}
-.room-chip{position:absolute;left:22px;bottom:22px;padding:10px 20px;border-radius:999px;background:rgba(251,248,243,.92);color:#3A2E28;font-family:var(--serif);font-weight:500;font-size:clamp(17px,2.2vw,24px);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;pointer-events:none}
+.room-chip{position:absolute;left:22px;top:22px;padding:10px 20px;border-radius:999px;background:rgba(251,248,243,.92);color:#3A2E28;font-family:var(--serif);font-weight:500;font-size:clamp(17px,2.2vw,24px);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s;pointer-events:none}
 .room-chip.show{opacity:1;transform:none}
 .drone-start,.drone-end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
 .drone-start{background:linear-gradient(rgba(34,26,22,.15),rgba(34,26,22,.45)),url(img/tour/05-exterior.jpg) center/cover;color:#fff}
@@ -89,7 +89,7 @@ img.photo{border:0;padding:0;display:block;object-fit:cover;background:var(--san
 .drone-end{background:var(--bg)}
 .drone-end b{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,44px);line-height:1.05}
 .end-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
-@media (max-width:560px){.film.drone{aspect-ratio:4/5}.room-chip{left:14px;bottom:14px}}
+@media (max-width:560px){.film.drone{aspect-ratio:4/5}.room-chip{left:14px;top:14px}}
 .soft{border-radius:28px}
 
 .hero{background:var(--oat)}
@@ -258,7 +258,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           <button class="play" type="button" id="play-tour" aria-label="Play the drone tour">
             <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
           </button>
-          <span class="tier">Drone tour &middot; 75 seconds</span>
+          <span class="tier">Drone tour &middot; 2 minutes</span>
           <b>Fly through every room</b>
         </div>
         <div class="drone-end" hidden>
@@ -409,46 +409,56 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   var clips=[
     ['8600644f-8071-4378-8aa9-ac27edc0e2be','Welcome to The Abernathy Residence'],
     ['dc64500f-1a66-472a-8107-5ae39b78f948','Front entrance'],
-    ['ab36d1a5-fec4-423a-a67a-f7890ff116e6','Entry'],
-    ['0ec9f55f-9cee-4eec-b788-da63796cfde8','Living room'],
-    ['63b7e832-2f25-4c89-9d25-653c167fd647','Dining room'],
-    ['92f44f4d-8944-4bc6-ad26-ba7edae47137','Kitchen'],
-    ['ca3a2138-5eeb-405c-b273-d90afc9fc1b1','Family room'],
-    ['5e415d99-b5de-44e0-b6e2-2cc440f3a675','Upstairs'],
-    ['43a7e89d-1353-46ce-be91-3bb5e5c1fa2d','Primary suite'],
-    ['e3783847-db9b-4b6d-8e7f-5231c03db72a','Primary bath'],
-    ['e7e3049f-093c-44d2-b4b6-7b60cc69c18e','Bedrooms'],
-    ['71da82b0-661f-4047-b27e-561c71b338fd','Backyard']
+    ['118f6d7a-4eca-478b-bcc8-1e4c544b109f','Half bath'],
+    ['0101fe45-023d-459e-916a-cfb52b56c14c','Kitchen'],
+    ['16095901-12e8-49c4-a525-2abdb8829db0','Living room'],
+    ['b79052cb-0f60-4cea-9af5-56001349ee69','Laundry room'],
+    ['4d33eee0-8d35-4347-a38b-2132afc241c5',''],
+    ['fb505790-224b-41c7-a347-0e0e27f990e5','Dining room'],
+    ['6f556671-e9e8-480b-8ac0-9058da56036f','Second living room'],
+    ['dca1cd9d-8f2d-4357-9ceb-5517c254c785',''],
+    ['6a307760-4ef6-461c-9f31-2085d5a98f1a','Upstairs'],
+    ['43a7e89d-1353-46ce-be91-3bb5e5c1fa2d','Main bedroom'],
+    ['e3783847-db9b-4b6d-8e7f-5231c03db72a','Main bathroom'],
+    ['00aab64f-d520-4b89-8e60-d891cc464298','Walk-in closet'],
+    ['ba8744bb-c3b6-4277-b5a5-b0fca6a5ab3e','Bonus room'],
+    ['2fb9d99a-46bc-4840-abf3-d82aad326d58',''],
+    ['533832ae-3c5d-4e9c-b714-1e79e63795b1','Bedroom two'],
+    ['f91d26ff-f1c5-4b0e-86ee-b2447ab8041e','Bedroom three'],
+    ['350a0e53-310c-421b-9a75-a84642404b14','Second bathroom'],
+    ['30e188b1-6fea-47cd-947d-38da5c1d5424','Bedroom four'],
+    ['5d727d1b-5a87-42f2-a51c-8d0227830a34',''],
+    ['0f4bad9d-175e-4710-a72b-2440db7d5dde','Backyard'],
+    ['71da82b0-661f-4047-b27e-561c71b338fd','']
   ];
   var box=document.getElementById('video-tour'); if(!box) return;
   var vids=box.querySelectorAll('.dv'), chip=box.querySelector('.room-chip');
   var start=box.querySelector('.drone-start'), end=box.querySelector('.drone-end');
-  var i=0, cur=0, chipT;
+  var i=0, cur=0, hideT, switching=false;
   function src(n){ return base+clips[n][0]+'.mp4'; }
   function label(n){
-    if(n>0 && clips[n][1]===clips[n-1][1]) return;
-    chip.classList.remove('show'); clearTimeout(chipT);
-    chipT=setTimeout(function(){ chip.textContent=clips[n][1]; chip.classList.add('show'); }, 250);
-    setTimeout(function(){ if(i===n) chip.classList.remove('show'); }, 4200);
+    var t=clips[n][1]; if(!t) return;
+    clearTimeout(hideT); chip.textContent=t; chip.classList.add('show');
+    hideT=setTimeout(function(){ chip.classList.remove('show'); }, 3800);
   }
-  function load(v,n){ v.src=src(n); v.load(); }
-  function show(n){
+  function prep(v,n){ v.src=src(n); v.preload='auto'; v.load(); }
+  function play(n){
     var v=vids[cur], other=vids[1-cur];
-    v.classList.add('on'); other.classList.remove('on');
-    v.play().catch(function(){});
-    label(n);
-    if(n+1<clips.length) load(other,n+1);
+    v.play().then(function(){ v.classList.add('on'); other.classList.remove('on'); other.pause(); }).catch(function(){ v.classList.add('on'); });
+    label(n); switching=false;
+    if(n+1<clips.length) prep(other,n+1);
   }
-  function next(){
-    i++;
-    if(i>=clips.length){ vids[cur].classList.remove('on'); chip.classList.remove('show'); end.hidden=false; return; }
-    cur=1-cur; vids[cur].currentTime=0; show(i);
+  function finish(){ chip.classList.remove('show'); end.hidden=false; vids.forEach(function(v){ v.classList.remove('on'); }); }
+  function advance(){
+    if(switching) return; switching=true; i++;
+    if(i>=clips.length){ finish(); return; }
+    cur=1-cur; play(i);
   }
-  vids.forEach(function(v){ v.addEventListener('ended', function(){ if(v===vids[cur]) next(); }); });
-  function begin(){
-    start.hidden=true; end.hidden=true; i=0; cur=0;
-    load(vids[0],0); show(0);
-  }
+  vids.forEach(function(v){
+    v.addEventListener('timeupdate', function(){ if(v===vids[cur] && v.duration && v.currentTime>=v.duration-0.12) advance(); });
+    v.addEventListener('ended', function(){ if(v===vids[cur]) advance(); });
+  });
+  function begin(){ start.hidden=true; end.hidden=true; i=0; cur=0; switching=false; prep(vids[0],0); play(0); }
   document.getElementById('play-tour').addEventListener('click', begin);
   document.getElementById('replay-tour').addEventListener('click', begin);
 })();
