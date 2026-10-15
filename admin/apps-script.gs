@@ -34,6 +34,7 @@ function setup() {
   var a = ss.getSheetByName(ASSESSMENTS) || ss.insertSheet(ASSESSMENTS);
   prep(a, A_HEAD);
   rule(a, A_HEAD.indexOf('Assessment status') + 1, ASSESS);
+  Logger.log('Your inquiries Sheet: ' + ss.getUrl());
   var blank = ss.getSheetByName('Sheet1');
   if (blank && blank.getLastRow() === 0 && ss.getSheets().length > 2) ss.deleteSheet(blank);
 }
@@ -124,6 +125,20 @@ function doPost(e) {
   return out('ok');
 }
 
-function book() { return SpreadsheetApp.openById(SHEET_ID); }
+/* Finds the inquiries Sheet. If this Google account cannot open the shared one,
+   it makes its own "The Abernathy Residence — Tour Inquiries" Sheet and remembers it. */
+function book() {
+  var bound = SpreadsheetApp.getActiveSpreadsheet();
+  if (bound) return bound;
+  var props = PropertiesService.getScriptProperties();
+  var ids = [props.getProperty('SHEET_ID'), SHEET_ID];
+  for (var i = 0; i < ids.length; i++) {
+    if (!ids[i]) continue;
+    try { return SpreadsheetApp.openById(ids[i]); } catch (err) {}
+  }
+  var made = SpreadsheetApp.create('The Abernathy Residence — Tour Inquiries');
+  props.setProperty('SHEET_ID', made.getId());
+  return made;
+}
 
 function out(t) { return ContentService.createTextOutput(t); }
