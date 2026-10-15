@@ -1,8 +1,9 @@
 /**
  * The Abernathy Residence — tour inquiry inbox (Google Apps Script).
- * Paste this into the Google Sheet: Extensions > Apps Script. Run setup() once,
+ * Works from the Sheet's Extensions > Apps Script or from script.google.com. Run setup() once,
  * then Deploy > New deployment > Web app (Execute as: Me, Who has access: Anyone).
  */
+var SHEET_ID = '1slor0dhnt_Jyma6WbZ3G8Xbj6yI28C8e4CdFnU2RoaY'; // The Abernathy Residence — Tour Inquiries
 var NOTIFY_EMAIL = 'info@theabernathyresidence.com'; // who gets an email for each new inquiry
 var INQUIRIES = 'Inquiries';
 var ASSESSMENTS = 'Care assessments';
@@ -23,7 +24,7 @@ var CONSULT = ['Pending', 'Scheduled', 'Completed', 'Not needed'];
 var ASSESS = ['Pending', 'Scheduled', 'Completed', 'Not eligible'];
 
 function setup() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = book();
   var s = ss.getSheetByName(INQUIRIES) || ss.insertSheet(INQUIRIES);
   prep(s, HEAD);
   rule(s, HEAD.indexOf('Status') + 1, STATUS);
@@ -55,7 +56,7 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = book();
     if (!ss.getSheetByName(INQUIRIES)) setup();
     var c = d.contact || {};
     var couple = /spouse|partner/.test(d.occupancy || '');
@@ -122,5 +123,7 @@ function doPost(e) {
   }
   return out('ok');
 }
+
+function book() { return SpreadsheetApp.openById(SHEET_ID); }
 
 function out(t) { return ContentService.createTextOutput(t); }
