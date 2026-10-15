@@ -113,6 +113,14 @@ img.photo{border:0;padding:0;display:block;object-fit:cover;background:var(--san
 @media (max-width:860px){.why{grid-template-columns:1fr}}
 
 .home{background:var(--oat)}
+.room-show{position:relative;aspect-ratio:3/2;max-width:960px;margin:0 auto;border-radius:36px;overflow:hidden;background:var(--sand)}
+.room-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s ease}
+.room-slide.on{opacity:1}
+.room-name{position:absolute;left:22px;top:22px;padding:9px 18px;border-radius:999px;background:rgba(251,248,243,.92);font-family:var(--serif);font-style:italic;font-size:20px;color:var(--cocoa,#3A2E28)}
+.room-dots{position:absolute;left:0;right:0;bottom:18px;display:flex;justify-content:center;gap:8px}
+.room-dots i{width:8px;height:8px;border-radius:4px;background:rgba(251,248,243,.6);transition:width .3s,background .3s}
+.room-dots i.on{width:22px;background:#FBF8F3}
+@media (prefers-reduced-motion:reduce){.room-slide{transition:none}}
 .gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .gallery figure{margin:0;display:grid;gap:10px}
 .gallery .photo{aspect-ratio:3/4}
@@ -278,23 +286,14 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           </div>
         </div>
       </div>
-      <div class="gallery">
-        <figure><img class="photo arch" src="img/rooms/entry.jpg" alt="Front entry with a dark front door and a staircase" loading="lazy"><figcaption>Entry and staircase</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/living.jpg" alt="Living room with leather sofas and a coffee table" loading="lazy"><figcaption>Living room</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/dining.jpg" alt="Dining room with a wood table and a gold chandelier" loading="lazy"><figcaption>Dining room</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/kitchen.jpg" alt="White kitchen with a granite island and stainless appliances" loading="lazy"><figcaption>Kitchen</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/second-living.jpg" alt="Second living room with two sofas and a TV" loading="lazy"><figcaption>Second living room</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/half-bath.jpg" alt="Half bath with a gold-framed mirror" loading="lazy"><figcaption>Half bath</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/laundry.jpg" alt="Laundry room with a washer and dryer" loading="lazy"><figcaption>Laundry room</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/main-bedroom.jpg" alt="Main bedroom with a black four-poster bed" loading="lazy"><figcaption>Main bedroom</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/main-bath.jpg" alt="Main bathroom with a soaking tub and marble shower" loading="lazy"><figcaption>Main bathroom</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/closet.jpg" alt="Walk-in closet with hanging rails" loading="lazy"><figcaption>Walk-in closet</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/bonus.jpg" alt="Bright bonus room with a sloped ceiling" loading="lazy"><figcaption>Bonus room</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/bedroom-two.jpg" alt="Bedroom with striped bedding" loading="lazy"><figcaption>Bedroom two</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/bedroom-three.jpg" alt="Bedroom with blue bedding" loading="lazy"><figcaption>Bedroom three</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/bedroom-four.jpg" alt="Bedroom with gray and white bedding" loading="lazy"><figcaption>Bedroom four</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/bath.jpg" alt="Hall bathroom with a double vanity" loading="lazy"><figcaption>Hall bathroom</figcaption></figure>
-        <figure><img class="photo arch" src="img/rooms/backyard.jpg" alt="Large grassy backyard behind the home" loading="lazy"><figcaption>Backyard</figcaption></figure>
+      <div class="room-show" id="room-show" aria-roledescription="slideshow" aria-label="Photos of the rooms">
+        <img class="room-slide on" src="img/rooms/living.jpg" alt="Main living room with two sofas, a ceiling fan and a TV" data-room="Living room">
+        <img class="room-slide" src="img/rooms/second-living.jpg" alt="Second living room with leather sofas and a coffee table" data-room="Second living room" loading="eager">
+        <img class="room-slide" src="img/rooms/dining.jpg" alt="Dining room with a wood table and a gold chandelier" data-room="Dining room" loading="eager">
+        <img class="room-slide" src="img/rooms/kitchen.jpg" alt="White kitchen with a granite island and stainless appliances" data-room="Kitchen" loading="eager">
+        <img class="room-slide" src="img/rooms/main-bedroom.jpg" alt="Main bedroom with a black four-poster bed" data-room="Main bedroom" loading="eager">
+        <span class="room-name" aria-live="off">Living room</span>
+        <div class="room-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="specs">
         <div><b>4</b><span>bedrooms</span></div>
@@ -429,6 +428,15 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
   </div>
 </footer>
 
+<script>
+(function(){
+  var box=document.getElementById('room-show'); if(!box) return;
+  var slides=box.querySelectorAll('.room-slide'), dots=box.querySelectorAll('.room-dots i'), name=box.querySelector('.room-name'), i=0;
+  function show(n){ slides[i].classList.remove('on'); dots[i].classList.remove('on'); i=n; slides[i].classList.add('on'); dots[i].classList.add('on'); name.textContent=slides[i].dataset.room; }
+  show(0);
+  setInterval(function(){ if(!document.hidden) show((i+1)%slides.length); },1000);
+})();
+</script>
 <script>
 (function(){
   var base='https://lhfhnrxhxoxtzubtrkbx.supabase.co/storage/v1/object/public/ai-videos/user_2rwAXJO2khuFX6nC6bJg1LCd1f2/';
