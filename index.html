@@ -173,7 +173,13 @@ details p{padding-bottom:22px;color:var(--muted)}
 .row > div{min-width:0}
 .copy{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--mocha);background:transparent;color:var(--fg);font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
 .copy:hover{background:var(--fg);color:var(--bg)}
-@media (max-width:860px){.tour .wrap{grid-template-columns:1fr}.row{border-radius:28px}}
+.booking{grid-column:1/-1;background:var(--bg);border:1px solid var(--nude);border-radius:28px;padding:clamp(20px,4vw,40px);min-width:0}
+.booking h3{font-family:var(--serif);font-size:clamp(30px,4vw,42px);font-weight:500;line-height:1.1;margin:12px 0 0}
+.booking p{font-size:16px;margin:12px 0 20px}
+.booking-frame{display:block;width:100%;height:700px;border:0;border-radius:18px;background:#fff}
+.booking .booking-fallback{font-size:14px;margin:14px 0 0}
+.booking-fallback a{text-decoration:underline;text-underline-offset:3px}
+@media (max-width:860px){.tour .wrap{grid-template-columns:1fr}.row{border-radius:28px}.booking-frame{height:760px}}
 
 footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
 </style>
@@ -348,7 +354,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
         <h2 id="steps-title">From first call to move-in</h2>
       </div>
       <ol class="steps">
-        <li><h3>Book a tour</h3><p>Call or email to visit the home and meet the people who will care for you.</p></li>
+        <li><h3>Book a tour</h3><p>Choose a time online, or call or email to visit the home and meet the people who will care for you.</p></li>
         <li><h3>Care assessment</h3><p>A free conversation about daily needs, health, routines and preferences.</p></li>
         <li><h3>Your plan and quote</h3><p>A written plan with the package that fits and its price.</p></li>
         <li><h3>Settle in</h3><p>Choose your room, bring your favorite things, and make it home.</p></li>
@@ -377,7 +383,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div>
         <div class="eyebrow">Book your private tour</div>
         <h2 id="tour-title" style="margin-top:18px">Come see the home</h2>
-        <p>Tours by appointment, 7 days a week. Call or email and we will find a time that suits you and your family.</p>
+        <p>Choose an open 45-minute tour time below, any day from 10 a.m. to 6 p.m. Eastern. You can also call or email us.</p>
       </div>
       <div class="contact">
         <div class="row">
@@ -385,12 +391,19 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           <button class="copy" type="button" id="copy-phone" data-copy="(678) 898-2995">Copy</button>
         </div>
         <div class="row">
-          <div><div class="k">Email</div><div class="v"><a href="mailto:AbernathyResidence@gmail.com">AbernathyResidence@gmail.com</a></div></div>
-          <button class="copy" type="button" id="copy-email" data-copy="AbernathyResidence@gmail.com">Copy</button>
+          <div><div class="k">Email</div><div class="v"><a href="mailto:info@theabernathyresidence.com">info@theabernathyresidence.com</a></div></div>
+          <button class="copy" type="button" id="copy-email" data-copy="info@theabernathyresidence.com">Copy</button>
         </div>
         <div class="row">
           <div><div class="k">Visit</div><div class="v">Douglasville, Georgia</div></div>
         </div>
+      </div>
+      <div class="booking" id="tour-calendar">
+        <div class="eyebrow">Available tour times</div>
+        <h3>Choose a day that works for you</h3>
+        <p>Select an open 45-minute appointment. The calendar updates automatically as tours are booked.</p>
+        <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2xTNckDbY7oeMxH6hOIZltG7PJV90GZ0OSL10bFUkedubNw3Q4ZIg8hkdYQp7xBSCs5yVIanl9?gv=true" title="Book a private tour of The Abernathy Residence" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <p class="booking-fallback">Calendar not showing? <a href="https://calendar.app.google/HcE7Sg6eqzhtNGDn8" target="_blank" rel="noopener noreferrer">Open the booking calendar</a>.</p>
       </div>
     </div>
   </section>
