@@ -92,7 +92,16 @@ var SERVICES = [
 function setup() {
   SpreadsheetApp.flush();
   var ss = book();
-  Object.keys(COLS).forEach(function (name) { ensureTab(ss, name, COLS[name]); });
+  try {
+    Object.keys(COLS).forEach(function (name) { ensureTab(ss, name, COLS[name]); });
+  } catch (err) {
+    // The Sheet itself is damaged (Google cannot read one of its tabs). Start a fresh admin Sheet and use it from now on.
+    var fresh = SpreadsheetApp.create('The Abernathy Residence — Admin (' + Utilities.formatDate(new Date(), 'America/New_York', 'yyyy-MM-dd') + ')');
+    PropertiesService.getScriptProperties().setProperty('SHEET_ID', fresh.getId());
+    Logger.log('The old Sheet could not be read (' + err + '). Created a new admin Sheet: ' + fresh.getUrl());
+    ss = fresh;
+    Object.keys(COLS).forEach(function (name) { ensureTab(ss, name, COLS[name]); });
+  }
   ss = SpreadsheetApp.openById(ss.getId()); // fresh copy after any tab changes
   var set = ss.getSheetByName(T.SET) || ss.insertSheet(T.SET);
   if (set.getLastRow() === 0) {
@@ -161,7 +170,7 @@ function ensureTab(ss, name, head) {
   // A tab deleted moments earlier can leave a stale reference ("Sheet … not found"): re-open and retry.
   for (var attempt = 0; attempt < 3; attempt++) {
     try { return ensureTabOnce(attempt ? SpreadsheetApp.openById(ss.getId()) : ss, name, head); }
-    catch (err) { if (!/not found/i.test(String(err)) || attempt === 2) throw err; SpreadsheetApp.flush(); Utilities.sleep(1500); }
+    catch (err) { if (!/not found|Service error/i.test(String(err)) || attempt === 2) throw err; SpreadsheetApp.flush(); Utilities.sleep(2000); }
   }
 }
 function findTab(ss, name) {
@@ -474,10 +483,11 @@ function json(o) { return ContentService.createTextOutput(JSON.stringify(o)).set
 /* Finds the admin Sheet. If this Google account cannot open the shared one,
    it makes its own "The Abernathy Residence — Tour Inquiries" Sheet and remembers it. */
 function book() {
+  var props = PropertiesService.getScriptProperties(), saved = props.getProperty('SHEET_ID');
+  if (saved) { try { return SpreadsheetApp.openById(saved); } catch (err) {} }
   var bound = SpreadsheetApp.getActiveSpreadsheet();
   if (bound) return bound;
-  var props = PropertiesService.getScriptProperties();
-  var ids = [props.getProperty('SHEET_ID'), SHEET_ID];
+  var ids = [SHEET_ID];
   for (var i = 0; i < ids.length; i++) {
     if (!ids[i]) continue;
     try { return SpreadsheetApp.openById(ids[i]); } catch (err) {}
