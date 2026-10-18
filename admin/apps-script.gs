@@ -66,7 +66,7 @@ var DEFAULT_SETTINGS = [
   ['Send tour reminders (day before)', 'Yes'],
   ['Max website submissions per minute', '20'],
   ['Data retention (months, closed inquiries) — review manually', '24'],
-  ['Template: acknowledgment', 'Thank you for your interest in {business}. We received your tour request ({id}). This is not yet a confirmed tour — our administrator will contact you to confirm a time.\n\nQuestions? Call {phone}.'],
+  ['Template: acknowledgment', 'Thank you for your interest in {business}. We received your answers ({id}). If you have not picked a tour time yet, you can choose one on our website calendar.\n\nQuestions? Call {phone}.'],
   ['Template: tour confirmation', 'Your private tour of {business} is confirmed for {date} at {time}. Reference {id}.\n\nTo change it, call {phone}.'],
   ['Template: propose new time', 'Thank you for your tour request ({id}). The time you asked for is not available. Could we offer {date} at {time} instead? Please call {phone} or reply to this email.'],
   ['Template: request information', 'Thank you for your tour request ({id}). Before we schedule your visit, our administrator would like to ask a few more questions. Please call {phone} at a convenient time.'],
@@ -100,6 +100,8 @@ function setup() {
   } else {
     var have = set.getRange(1, 1, set.getLastRow(), 1).getValues().map(function (r) { return r[0]; });
     DEFAULT_SETTINGS.forEach(function (row) { if (have.indexOf(row[0]) < 0) set.appendRow(row); });
+    var ack = have.indexOf('Template: acknowledgment'); // replace the older wording if it was never customised
+    if (ack > -1 && /This is not yet a confirmed tour/.test(set.getRange(ack + 1, 2).getValue())) set.getRange(ack + 1, 2).setValue(DEFAULT_SETTINGS[8][1]);
   }
   var svc = ss.getSheetByName(T.SVC);
   if (svc.getLastRow() === 1) {
@@ -119,7 +121,7 @@ function setup() {
   ['Room suitability review', 'Licensed capacity verification', 'Admission eligibility review'].forEach(function (h) { list(inq, h, REVIEW); });
   list(inq, 'Private financial consultation', ['Pending', 'Scheduled', 'Completed', 'Not needed']);
   var tours = ss.getSheetByName(T.TOURS);
-  list(tours, 'Tour status', ['Requested', 'Approved', 'Proposed new time', 'Scheduled', 'Completed', 'Cancelled', 'No-show']);
+  list(tours, 'Tour status', ['Requested', 'Approved', 'Proposed new time', 'Scheduled', 'Completed', 'Cancelled', 'No-show', 'Not offered (budget)']);
   list(tours, 'Action', ['', 'Approve & send confirmation', 'Propose new time', 'Request more information', 'Discuss alternative placement']);
   checks(ss.getSheetByName(T.TASKS), ['Done']);
   var adm = ss.getSheetByName(T.ADM);
@@ -246,7 +248,7 @@ function cleanList(v) { return (Array.isArray(v) ? v : []).map(function (x) { re
 function saveInquiry(d) {
   var a = d.answers || {};
   var req = ['submitter', 'residentName', 'residentAge', 'phone', 'placement', 'timing', 'mobility', 'meds', 'nursing',
-    'memory', 'funding', 'understandPrivatePay', 'tourDate', 'tourWindow'];
+    'memory', 'funding', 'understandPrivatePay', 'income'];
   for (var i = 0; i < req.length; i++) if (!clean(a[req[i]])) return { ok: false, error: 'missing_' + req[i] };
   if (clean(a.phone).replace(/\D/g, '').length < 10) return { ok: false, error: 'phone' };
   if (a.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(a.email)) return { ok: false, error: 'email' };
@@ -259,6 +261,8 @@ function saveInquiry(d) {
   var couple = /spouse|partner/i.test(a.occupancy || ''), rel = couple ? (/spouse/i.test(a.occupancy) ? 'Spouse' : 'Partner') : '';
   var room = !couple ? 'Individual' : /share/.test(a.roomPref) ? 'Shared' : /separate/.test(a.roomPref) ? 'Separate' : 'Undecided';
   var flags = [], urgent = a.timing === 'Within 7 days';
+  var lowBudget = ['Under $1,000', '$1,000–$1,499', '$1,500–$1,999'].indexOf(a.income) > -1;
+  if (lowBudget) { flags.push('Monthly budget under $2,000 — tour calendar not offered'); urgent = false; }
   if (urgent) flags.push('URGENT: move-in within 7 days');
   if (a.placement === 'Respite stay') flags.push('Respite: confirm dates ' + clean(a.respiteStart) + ' to ' + clean(a.respiteEnd));
   if (a.placement === 'Housing only') flags.push('Housing only requested — clarify PCH services and placement expectations');
@@ -288,7 +292,7 @@ function saveInquiry(d) {
     });
   }
   var row = {
-    'Inquiry ID': id, 'Received': now, 'Status': 'New Inquiry', 'Urgent': urgent ? 'Yes' : '', 'Flags for review': flags.join('\n'),
+    'Inquiry ID': id, 'Received': now, 'Status': lowBudget ? 'Closed' : 'New Inquiry', 'Urgent': urgent ? 'Yes' : '', 'Flags for review': flags.join('\n'),
     'Source': clean(d.source, 200), 'Submitted by': clean(a.submitter), 'Resident name': clean(a.residentName, 120),
     'Resident age': clean(a.residentAge, 5), 'Contact name': clean(a.contactName || a.residentName, 120),
     'Relationship to resident': clean(a.relationship || (a.submitter === 'Resident' ? 'Self' : ''), 120),
@@ -315,17 +319,17 @@ function saveInquiry(d) {
   };
   appendObj(inq, row);
   appendObj(ss.getSheetByName(T.TOURS), { 'Inquiry ID': id, 'Contact name': row['Contact name'], 'Phone': row.Phone, 'Email': row.Email,
-    'Reminder consent': row['Reminder consent'], 'Requested date': row['Preferred tour date'], 'Requested window': row['Preferred tour window'], 'Tour status': 'Requested' });
-  task('Tour request', id, 'Review inquiry and approve, propose a time, request information or discuss alternative placement' + (urgent ? ' (URGENT)' : ''), urgent ? 0 : 1);
+    'Reminder consent': row['Reminder consent'], 'Requested date': row['Preferred tour date'], 'Requested window': row['Preferred tour window'], 'Tour status': lowBudget ? 'Not offered (budget)' : 'Requested' });
+  if (!lowBudget) task('Tour request', id, 'Review inquiry and approve, propose a time, request information or discuss alternative placement' + (urgent ? ' (URGENT)' : ''), urgent ? 0 : 1);
   if (/Yes|Maybe/.test(a.premiumInterest)) task('Premium interest', id, 'Follow up on premium services: ' + (row['Premium categories'] || 'general'), 3);
   // Admin email: no health, care or financial details.
   mail(setting('Admin notification email'), (urgent ? 'URGENT — ' : '') + 'New tour inquiry ' + id,
     'A new tour inquiry was received (' + id + ').\nItems flagged for review: ' + flags.length +
     '\n\nOpen the admin Sheet to see the details:\n' + ss.getUrl());
-  if (row.Email && /^y/i.test(setting('Send applicant acknowledgment'))) {
+  if (row.Email && !lowBudget && /^y/i.test(setting('Send applicant acknowledgment'))) {
     mail(row.Email, 'We received your tour request — ' + setting('Business name'), fill(setting('Template: acknowledgment'), { id: id }));
   }
-  return { ok: true, id: id };
+  return { ok: true, id: id, tourEligible: !lowBudget };
 }
 
 /* ---------- Optional service information requests ---------- */

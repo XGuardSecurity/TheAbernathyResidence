@@ -188,7 +188,7 @@ details p{padding-bottom:22px;color:var(--muted)}
 .booking-frame{display:block;width:100%;height:700px;border:0;border-radius:18px;background:#fff}
 .booking .booking-fallback{font-size:14px;margin:14px 0 0}
 .booking-fallback a{text-decoration:underline;text-underline-offset:3px}
-.intake[hidden]{display:none!important}
+.intake[hidden],#tour-calendar[hidden]{display:none!important}
 .q-progress{height:6px;border-radius:3px;background:var(--sand);overflow:hidden;margin-top:8px}
 .q-progress span{display:block;height:100%;width:0;background:var(--champ);transition:width .3s ease}
 .q-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mocha);margin-top:10px}
@@ -492,7 +492,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       <div>
         <div class="eyebrow">Book your private tour</div>
         <h2 id="tour-title" style="margin-top:18px">Come see the home</h2>
-        <p>Answer a few questions below and our administrator will contact you to confirm a private tour. Tours run daily from 10 a.m. to 6 p.m. Eastern. You can also call or email us.</p>
+        <p>Answer a few questions below, then choose an open tour time on our calendar. Tours run daily from 10 a.m. to 6 p.m. Eastern. You can also call or email us.</p>
       </div>
       <div class="contact">
         <div class="row">
@@ -526,17 +526,22 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
           <p class="q-error" role="alert"></p>
         </form>
         <div class="q-done" hidden tabindex="-1">
-          <h3>Your tour request was received</h3>
-          <p>Your reference number is <b class="q-id"></b>. This is not yet a confirmed tour. Our administrator will contact you within one business day to confirm a time.</p>
+          <h3>Thank you. Choose your tour time</h3>
+          <p>Your reference number is <b class="q-id"></b>. Pick an open time on the calendar below to book your private tour.</p>
+          <a class="btn btn-dark" href="#tour-calendar">Choose a tour time</a>
+        </div>
+        <div class="q-closed" hidden tabindex="-1">
+          <h3>Thank you for your interest</h3>
+          <p>Your reference number is <b class="q-id"></b>. The Abernathy Residence accepts private pay only, and based on the monthly budget you shared, we are not able to offer a tour at this time. If your situation changes, we would be glad to hear from you.</p>
           <a class="btn btn-line" href="tel:+16788982995">Speak with our administrator</a>
         </div>
         <p class="q-note">We accept private pay only. Your answers are kept private and used only to arrange your visit.</p>
       </div>
-      <div class="booking" id="tour-calendar">
-        <div class="eyebrow">Available tour times</div>
+      <div class="booking" id="tour-calendar" hidden>
+        <div class="eyebrow">Choose your tour time</div>
         <h3>Choose a day that works for you</h3>
         <p>Select an open 45-minute appointment. The calendar updates automatically as tours are booked.</p>
-        <iframe class="booking-frame" src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2xTNckDbY7oeMxH6hOIZltG7PJV90GZ0OSL10bFUkedubNw3Q4ZIg8hkdYQp7xBSCs5yVIanl9?gv=true" title="Book a private tour of The Abernathy Residence" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <iframe class="booking-frame" data-src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2xTNckDbY7oeMxH6hOIZltG7PJV90GZ0OSL10bFUkedubNw3Q4ZIg8hkdYQp7xBSCs5yVIanl9?gv=true" title="Book a private tour of The Abernathy Residence" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         <p class="booking-fallback">Calendar not showing? <a href="https://calendar.app.google/HcE7Sg6eqzhtNGDn8" target="_blank" rel="noopener noreferrer">Open the booking calendar</a>.</p>
       </div>
     </div>
@@ -590,20 +595,19 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
     {s:'Private pay',id:'funding',type:'single',q:'We accept private pay only. How will monthly fees be funded?',opts:['Resident income','Savings','Family sponsor','Combination','Long-term care insurance with private funds','Government-funded placement only','Unsure']},
     {s:'Private pay',id:'sponsorRel',type:'text',when:function(a){return a.funding==='Family sponsor';},q:"What is the sponsor's relationship to the resident?"},
     {s:'Private pay',id:'sponsorDiscuss',type:'single',when:function(a){return a.funding==='Family sponsor';},q:'Is the sponsor willing to discuss payment with our administrator?',opts:['Yes','No','Possibly']},
-    {s:'Private pay',id:'income',type:'single',optional:true,q:"What is the resident's approximate monthly income?",help:'Optional. This helps us plan a private conversation.',opts:['Under $1,000','$1,000–$1,499','$1,500–$1,999','$2,000–$2,999','$3,000–$3,999','$4,000–$5,999','$6,000+','Prefer to discuss privately']},
+    {s:'Private pay',id:'income',type:'single',q:"What is the monthly budget for the resident's care?",help:'This helps us make sure we are the right fit.',opts:['Under $1,000','$1,000–$1,499','$1,500–$1,999','$2,000–$2,999','$3,000–$3,999','$4,000–$5,999','$6,000+']},
     {s:'Private pay',id:'familyContrib',type:'single',q:'Will family or a sponsor contribute?',opts:['Yes','No','Possibly']},
     {s:'Private pay',id:'payCoordinator',type:'text',q:'Who will coordinate payment?',help:'A name and relationship, for example "Maria, daughter".'},
     {s:'Private pay',id:'discussAdmin',type:'single',q:'Would you like to discuss private-pay arrangements with our administrator?',opts:['Yes','No','Maybe later']},
     {s:'Private pay',id:'understandPrivatePay',type:'single',q:'Do you understand that this residence requires private-pay arrangements?',opts:['Yes','Need clarification']},
     {s:'Tour & lifestyle',id:'residentInterested',type:'single',q:'Is the resident interested in exploring this placement?',opts:['Yes','Not sure yet','We have not discussed it yet','No']},
     {s:'Tour & lifestyle',id:'attendees',type:'text',q:'Who will attend the tour?',help:'For example: "Me and my mother".'},
-    {s:'Tour & lifestyle',id:'tourDate',type:'date',q:'What is your preferred tour date?',help:'This is a request. Our administrator will confirm the time with you.'},
-    {s:'Tour & lifestyle',id:'tourWindow',type:'single',q:'What time of day works best?',opts:['Morning (10 a.m. – 12 p.m.)','Midday (12 – 2 p.m.)','Afternoon (2 – 4 p.m.)','Late afternoon (4 – 6 p.m.)']},
     {s:'Tour & lifestyle',id:'premiumInterest',type:'single',q:'Would you like information about our optional premium lifestyle services?',opts:['Yes','No','Maybe']},
     {s:'Tour & lifestyle',id:'premiumCats',type:'multi',optional:true,when:function(a){return /Yes|Maybe/.test(a.premiumInterest||'');},q:'Which services interest you?',help:'Choose all that apply.',opts:PREMIUM},
     {s:'Tour & lifestyle',id:'questions',type:'textarea',optional:true,q:'Do you have any other questions for us?'}
   ];
   var LABEL={respite:'Respite dates'};
+  var LOW_BUDGET=['Under $1,000','$1,000–$1,499','$1,500–$1,999'];
   var form=box.querySelector('.q-form'), stage=box.querySelector('.q-stage'), back=box.querySelector('.q-back'), skip=box.querySelector('.q-skip'), next=box.querySelector('.q-next'), err=box.querySelector('.q-error'), bar=box.querySelector('.q-progress span'), count=box.querySelector('.q-count'), sec=box.querySelector('.q-section');
   var a={}, pos=0, started=Date.now(), token=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Math.random()).slice(2)+Date.now(), sending=false;
   function list(){ return Q.filter(function(q){ return !q.when||q.when(a); }); }
@@ -621,7 +625,7 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
       }).join('')+'</dl>'+
       '<label class="q-check"><input type="checkbox" name="consent"'+(a._consent?' checked':'')+'> I agree that The Abernathy Residence may contact me by phone, text or email about this inquiry. (Required)</label>'+
       '<label class="q-check"><input type="checkbox" name="reminders"'+(a._reminders?' checked':'')+'> Send me tour confirmations and reminders by email. You can opt out at any time.</label>'+
-      '<p class="q-help">Submitting sends a tour request. It does not confirm a tour or admission; our administrator will contact you.</p></fieldset>';
+      '<p class="q-help">After you submit, you can choose a tour time if a tour is available for your situation. Submitting does not confirm admission.</p></fieldset>';
       skip.hidden=true; back.style.visibility='visible'; next.hidden=false; next.textContent='Submit tour request';
       return;
     }
@@ -678,12 +682,15 @@ footer .wrap{padding-block:30px;display:flex;justify-content:space-between;align
     keepChecks();
     if(!a._consent){ err.textContent='Please agree to be contacted so we can arrange your tour.'; return; }
     var answers={}; Object.keys(a).forEach(function(k){ if(k[0]!=='_') answers[k]=a[k]; });
+    var eligible=LOW_BUDGET.indexOf(a.income)<0; answers.tourDate='Chosen on booking calendar'; answers.tourWindow=eligible?'Chosen on booking calendar':'Not offered (budget)';
     var payload={kind:'inquiry',token:token,answers:answers,consent:true,reminders:!!a._reminders,elapsed:Date.now()-started,
       source:(new URLSearchParams(location.search).get('utm_source')||document.referrer||'direct').slice(0,200),website:form.website.value};
     window.__lastInquiry=payload;
     sending=true; next.disabled=true; next.textContent='Sending…';
     var ok=function(id){ form.hidden=true; box.querySelector('.q-progress').hidden=true; count.hidden=true; sec.hidden=true;
-      var d=box.querySelector('.q-done'); d.querySelector('.q-id').textContent=id; d.hidden=false; d.scrollIntoView({block:'center'}); };
+      var d=box.querySelector(eligible?'.q-done':'.q-closed'); d.querySelector('.q-id').textContent=id; d.hidden=false;
+      if(eligible){ var cal=document.getElementById('tour-calendar'), f=cal.querySelector('iframe[data-src]'); if(f){ f.src=f.dataset.src; f.removeAttribute('data-src'); } cal.hidden=false; cal.scrollIntoView({behavior:'smooth',block:'start'}); }
+      else d.scrollIntoView({block:'center'}); };
     var fail=function(msg){ sending=false; next.disabled=false; next.textContent='Submit tour request'; err.textContent=msg||'We could not send that. Please try again, or call (678) 898-2995.'; };
     if(!endpoint){ ok('TEST-ONLY'); return; }
     fetch(endpoint,{method:'POST',body:new URLSearchParams({payload:JSON.stringify(payload)})})
