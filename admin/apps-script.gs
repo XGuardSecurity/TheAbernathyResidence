@@ -90,8 +90,10 @@ var SERVICES = [
 
 /* ---------- Setup ---------- */
 function setup() {
+  SpreadsheetApp.flush();
   var ss = book();
   Object.keys(COLS).forEach(function (name) { ensureTab(ss, name, COLS[name]); });
+  ss = SpreadsheetApp.openById(ss.getId()); // fresh copy after any tab changes
   var set = ss.getSheetByName(T.SET) || ss.insertSheet(T.SET);
   if (set.getLastRow() === 0) {
     set.getRange(1, 1, 1, 2).setValues([['Setting', 'Value']]).setFontWeight('bold').setBackground('#EBDFD1');
@@ -156,7 +158,19 @@ function setup() {
 }
 
 function ensureTab(ss, name, head) {
-  var s = ss.getSheetByName(name);
+  // A tab deleted moments earlier can leave a stale reference ("Sheet … not found"): re-open and retry.
+  for (var attempt = 0; attempt < 3; attempt++) {
+    try { return ensureTabOnce(attempt ? SpreadsheetApp.openById(ss.getId()) : ss, name, head); }
+    catch (err) { if (!/not found/i.test(String(err)) || attempt === 2) throw err; SpreadsheetApp.flush(); Utilities.sleep(1500); }
+  }
+}
+function findTab(ss, name) {
+  var all = ss.getSheets();
+  for (var i = 0; i < all.length; i++) if (all[i].getName() === name) return all[i];
+  return null;
+}
+function ensureTabOnce(ss, name, head) {
+  var s = findTab(ss, name);
   if (!s) s = ss.insertSheet(name);
   var cur = s.getLastColumn() ? s.getRange(1, 1, 1, s.getLastColumn()).getValues()[0] : [];
   if (cur.length && cur[0] && cur[0] !== head[0]) { // an older layout: keep it, start fresh beside it
